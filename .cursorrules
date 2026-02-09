@@ -1,0 +1,6 @@
+# Design tokens & styling
+
+- **디자인 토큰 정의 위치**: `app/globals.css`의 `@theme inline`과 `:root`. 색, 폰트, 컨테이너 등은 여기에만 정의한다.
+- **컴포넌트/페이지에서는 테마 토큰만 사용**: `text-primary`, `bg-primary`, `text-heading`, `text-muted`, `bg-surface`, `text-on-dark` 등 Tailwind 테마 클래스를 사용한다. `text-[#333333]`, `bg-[#4043D0]` 같은 임의 hex 사용 금지.
+- **새 색이 필요할 때**: 먼저 `app/globals.css`의 `@theme inline`에 `--color-이름`을 추가한 뒤, 클래스는 `text-이름` / `bg-이름` 형태로 사용한다.
+- **네이밍**: `--color-*`는 의미 있는 이름(primary, heading, muted, on-dark, surface 등)을 사용한다. 토큰 목록·값은 globals.css를 참고한다.

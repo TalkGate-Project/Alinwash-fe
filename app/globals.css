@@ -1,26 +1,79 @@
 @import "tailwindcss";
+@import "@fontsource/pretendard";
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --container-max: 1226px;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* Primary (브랜드) */
+  --color-primary: #4043D0;
+  --color-primary-hover: #3537b3;
+
+  /* Dark (히어로/CTA 배경) */
+  --color-dark: #1a1a2e;
+  --color-dark-light: #2a2a40;
+  --color-dark-section: #21212D;
+
+  /* 텍스트 – 밝은 배경 위 */
+  --color-heading: #333333;
+  --color-muted: #494949;
+  --color-muted-alt: #555555;
+  --color-muted-light: #888888;
+
+  /* 텍스트 – 어두운 배경 위 */
+  --color-on-dark: #ffffff;
+  --color-on-dark-muted: #B6B6B6;
+
+  /* 표면/배경 */
+  --color-surface: #F2F2F2;
+  --color-surface-card: #F9F9F9;
+  --color-surface-footer: #D5D5D5;
+  --color-surface-avatar: #D9D9D9;
+  --color-surface-faq: #F5F7FF;
+
+  /* 푸터·아이콘 보조 */
+  --color-footer-text: #808080;
+  --color-icon-muted: #B0B0B0;
+
+  /* 1순위 Pretendard, 2순위 Montserrat 기본 스택 */
+  --font-sans: "Pretendard", var(--font-montserrat), ui-sans-serif, system-ui,
+    sans-serif;
+  --font-pretendard: "Pretendard", ui-sans-serif, system-ui, sans-serif;
+  --font-montserrat: var(--font-montserrat), "Montserrat", ui-sans-serif,
+    system-ui, sans-serif;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* button 기본 커서 */
+button {
+  cursor: pointer;
+}
+button:disabled {
+  cursor: not-allowed;
+}
+
+/* 1226px 컨테이너 – 전체 공통 */
+@layer components {
+  .container-main {
+    width: 100%;
+    max-width: var(--container-max);
+    margin-left: auto;
+    margin-right: auto;
+
+  }
+  /* @media (min-width: 1024px) {
+    .container-main {
+
+    }
+  } */
 }
