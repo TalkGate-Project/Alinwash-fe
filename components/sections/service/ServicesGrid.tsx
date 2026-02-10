@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useRef, useState, useCallback } from "react";
+import { useInViewOnce } from "@/hooks/useInViewOnce";
 
 const SERVICE_ICONS = [
   "/service-introduce-01.png",
@@ -38,6 +39,7 @@ const SERVICES = [
 ];
 
 export default function ServicesGrid() {
+  const { ref: sectionRef, inView } = useInViewOnce<HTMLElement>();
   const scrollRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -55,15 +57,15 @@ export default function ServicesGrid() {
   }, []);
 
   return (
-    <section className="bg-surface py-9 md:py-16 md:pt-[90px] md:pb-[135px]">
+    <section ref={sectionRef} className="bg-surface py-9 md:py-16 md:pt-[90px] md:pb-[135px]">
       <div className="container-main text-center">
-        <p className="text-small font-semibold text-muted md:text-eyebrow md:leading-[28px] md:tracking-[-0.04em] md:text-heading">
+        <p className={`text-small font-semibold text-muted md:text-eyebrow md:leading-[28px] md:tracking-[-0.04em] md:text-heading reveal-fade ${inView ? "reveal-visible" : ""}`}>
           What&apos;s Next?
         </p>
-        <h2 className="mt-2 text-[20px] font-bold tracking-[-0.04em] text-heading md:mt-5 md:text-section-title">
+        <h2 className={`mt-2 text-[20px] font-bold tracking-[-0.04em] text-heading md:mt-5 md:text-section-title reveal-fade reveal-delay-1 ${inView ? "reveal-visible" : ""}`}>
           차를 위한 가장 완벽한 선택
         </h2>
-        <p className="px-7 mx-auto mt-4 text-small leading-relaxed text-muted md:mt-6 md:text-body md:leading-[2] !text-left">
+        <p className={`px-7 mx-auto mt-4 text-small leading-relaxed text-muted md:mt-6 md:text-body md:leading-[2] !text-left reveal-fade reveal-delay-2 ${inView ? "reveal-visible" : ""}`}>
           찾아가는 편리함부터 확실한 사후 관리까지,<br />
           번거로운 세차 과정은 줄이고, 전문가의 세심한 손길로 최상의 컨디션을 유지합니다.
         </p>
@@ -78,7 +80,7 @@ export default function ServicesGrid() {
             {SERVICES.map((service, index) => (
               <div
                 key={service.icon}
-                className="flex min-w-[min(280px,78vw)] max-w-[78vw] flex-shrink-0 snap-center rounded-xl bg-white p-5 shadow-[0px_4px_8px_rgba(0,0,0,0.08)] flex flex-col items-center justify-center"
+                className={`flex min-w-[min(280px,78vw)] max-w-[78vw] flex-shrink-0 snap-center rounded-xl bg-white p-5 shadow-[0px_4px_8px_rgba(0,0,0,0.08)] flex flex-col items-center justify-center reveal-up reveal-delay-${index + 1} ${inView ? "reveal-visible" : ""}`}
               >
                 <div className="relative mx-auto overflow-hidden rounded-lg">
                   <Image
@@ -125,7 +127,7 @@ export default function ServicesGrid() {
           {SERVICES.map((service, index) => (
             <div
               key={service.icon}
-              className="md:min-h-[342px] rounded-xl bg-white p-5 text-center hover:shadow-md md:p-6 flex flex-col items-center justify-center"
+              className={`md:min-h-[342px] rounded-xl bg-white p-5 text-center hover:shadow-md md:p-6 flex flex-col items-center justify-center reveal-up reveal-delay-${index + 1} ${inView ? "reveal-visible" : ""}`}
             >
               <div className="relative mx-auto overflow-hidden rounded-lg">
                 <Image

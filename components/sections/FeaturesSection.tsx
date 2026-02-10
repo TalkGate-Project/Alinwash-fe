@@ -1,3 +1,7 @@
+"use client";
+
+import { useInViewOnce } from "@/hooks/useInViewOnce";
+
 const FEATURES = [
   {
     id: "TIME",
@@ -40,18 +44,20 @@ const FEATURES = [
 ];
 
 export default function FeaturesSection() {
+  const { ref: sectionRef, inView } = useInViewOnce<HTMLElement>();
+
   return (
-    <section className="py-12 md:pt-[132px] md:pb-[166px]">
+    <section ref={sectionRef} className="py-12 md:pt-[132px] md:pb-[166px]">
       <div className="container-main">
-        <h2 className="text-center text-[18px] font-semibold md:text-section-title-sm">
+        <h2 className={`text-center text-[18px] font-semibold md:text-section-title-sm reveal-fade ${inView ? "reveal-visible" : ""}`}>
           당신의 일상을 바꾸는 스마트한 차량 관리
         </h2>
 
         <div className="mt-3 md:mt-[88px] grid grid-cols-1 gap-6 md:gap-[42px] md:grid-cols-3">
-          {FEATURES.map((feature) => (
+          {FEATURES.map((feature, index) => (
             <div
               key={feature.id}
-              className="md:min-h-[302px] rounded-[20px] bg-surface-card px-8 py-6 text-left transition-shadow hover:shadow-md md:p-[32px]"
+              className={`md:min-h-[302px] rounded-[20px] bg-surface-card px-8 py-6 text-left transition-shadow hover:shadow-md md:p-[32px] reveal-up reveal-delay-${index + 1} ${inView ? "reveal-visible" : ""}`}
             >
               {/* icon placeholder */}
               <div className="flex h-[58px] w-[58px] items-center justify-center rounded-[10px] bg-background text-primary text-sm font-bold shadow-[0px_0px_16px_0px_#0000001A]">

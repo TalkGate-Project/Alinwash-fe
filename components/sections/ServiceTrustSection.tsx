@@ -1,8 +1,13 @@
+"use client";
+
 import Image from "next/image";
+import { useInViewOnce } from "@/hooks/useInViewOnce";
 
 export default function ServiceTrustSection() {
+  const { ref: sectionRef, inView } = useInViewOnce<HTMLElement>();
+
   return (
-    <section className="overflow-hidden">
+    <section ref={sectionRef} className="overflow-hidden">
       {/* 모바일: 이미지 + dim + 텍스트 오버레이 (현재 구조 유지) */}
       <div className="relative min-h-[280px] md:hidden">
         <Image
@@ -19,7 +24,7 @@ export default function ServiceTrustSection() {
         />
         <div className="absolute inset-0 z-20 flex items-center">
           <div className="container-main flex w-full justify-end">
-            <div className="max-w-[528px] px-4 py-10 text-right">
+            <div className={`max-w-[528px] px-4 py-10 text-right reveal-fade ${inView ? "reveal-visible" : ""}`}>
               <h2 className="text-[18px] font-semibold tracking-[-0.04em] text-on-dark">
                 만나지 않아도 믿을 수 있는 서비스
               </h2>
@@ -46,7 +51,7 @@ export default function ServiceTrustSection() {
           />
         </div>
         <div className="flex items-center justify-center bg-dark-section px-6 py-12 md:px-12 md:py-16 text-right">
-          <div className="flex max-w-[528px] flex-col">
+          <div className={`flex max-w-[528px] flex-col reveal-fade ${inView ? "reveal-visible" : ""}`}>
             <h2 className="text-2xl font-semibold tracking-[-0.04em] text-on-dark md:text-section-title-sm md:leading-[48px]">
               만나지 않아도 믿을 수 있는 서비스
             </h2>

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { format, parse } from "date-fns";
 import DateTimePicker from "@/components/DateTimePicker";
+import { useInViewOnce } from "@/hooks/useInViewOnce";
 
 interface FormData {
   name: string;
@@ -31,6 +32,7 @@ function formatPhoneInput(value: string): string {
 }
 
 export default function BookingForm() {
+  const { ref: sectionRef, inView } = useInViewOnce<HTMLDivElement>();
   const [form, setForm] = useState<FormData>({
     name: "",
     phone: "",
@@ -119,7 +121,10 @@ export default function BookingForm() {
   return (
     <section className="relative z-10 -mt-64 md:-mt-20">
       <div className="container-main">
-        <div className="rounded-[24px] bg-white p-6 shadow-[0px_8px_12px_0px_#091E421A] md:px-[52px] md:pt-[44px] md:pb-[48px]">
+        <div
+          ref={sectionRef}
+          className={`rounded-[24px] bg-white p-6 shadow-[0px_8px_12px_0px_#091E421A] md:px-[52px] md:pt-[44px] md:pb-[48px] reveal-up ${inView ? "reveal-visible" : ""}`}
+        >
           <p className="mb-5 md:mb-[30px] flex items-center gap-2 text-body font-bold md:text-eyebrow">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="shrink-0 text-primary">
                   <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useInViewOnce } from "@/hooks/useInViewOnce";
 
 const FAQ_ITEMS = [
   {
@@ -32,6 +33,7 @@ const FAQ_ITEMS = [
 ];
 
 export default function FaqSection() {
+  const { ref: sectionRef, inView } = useInViewOnce<HTMLElement>();
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   const toggle = (index: number) => {
@@ -39,12 +41,12 @@ export default function FaqSection() {
   };
 
   return (
-    <section className="bg-surface-faq py-9 md:py-24">
+    <section ref={sectionRef} className="bg-surface-faq py-9 md:py-24">
       <div className="container-main">
-        <p className="text-center text-small font-semibold text-muted md:text-eyebrow md:text-heading">
+        <p className={`text-center text-small font-semibold text-muted md:text-eyebrow md:text-heading reveal-fade ${inView ? "reveal-visible" : ""}`}>
           FAQ&apos;S
         </p>
-        <h2 className="mt-2 text-center text-[20px] font-bold tracking-[-0.04em] text-heading md:text-section-title">
+        <h2 className={`mt-2 text-center text-[20px] font-bold tracking-[-0.04em] text-heading md:text-section-title reveal-fade reveal-delay-1 ${inView ? "reveal-visible" : ""}`}>
           서비스 이용 문의
         </h2>
 
@@ -54,7 +56,7 @@ export default function FaqSection() {
             return (
               <div
                 key={index}
-                className={`rounded-xl bg-white ${isOpen ? "shadow-[0px_4px_8px_0px_#0000001A]" : "shadow-[0px_1px_3px_0px_#0000000D]"}`}
+                className={`rounded-xl bg-white reveal-up reveal-delay-${Math.min(index + 1, 4)} ${inView ? "reveal-visible" : ""} ${isOpen ? "shadow-[0px_4px_8px_0px_#0000001A]" : "shadow-[0px_1px_3px_0px_#0000000D]"}`}
               >
                 <button
                   type="button"

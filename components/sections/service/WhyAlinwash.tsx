@@ -1,12 +1,17 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useInViewOnce } from "@/hooks/useInViewOnce";
 
 export default function WhyAlinwash() {
+  const { ref: sectionRef, inView } = useInViewOnce<HTMLElement>();
+
   return (
-    <section className="py-12 md:py-24">
+    <section ref={sectionRef} className="py-12 md:py-24">
       <div className="!px-7 md:px-3 container-main grid grid-cols-1 items-center md:grid-cols-2 gap-6">
         {/* 모바일 1순위: 2줄 제목 (사진 위) / 웹: 우측 1행 */}
-        <div className="order-1 text-center md:col-start-2 md:row-start-1 md:text-left">
+        <div className={`order-1 text-center md:col-start-2 md:row-start-1 md:text-left reveal-fade ${inView ? "reveal-visible" : ""}`}>
           <p className="text-small font-semibold text-muted md:text-eyebrow md:leading-[28px] md:text-heading">
             Why Alinwash?
           </p>
@@ -16,7 +21,7 @@ export default function WhyAlinwash() {
         </div>
 
         {/* 모바일 2순위: 이미지 / 웹: 좌측 전체(2행) */}
-        <div className="order-2 flex items-center justify-center min-h-[260px] overflow-hidden rounded-xl md:col-start-1 md:row-span-2 md:row-start-1 md:min-h-[380px]">
+        <div className={`order-2 flex items-center justify-center min-h-[260px] overflow-hidden rounded-xl md:col-start-1 md:row-span-2 md:row-start-1 md:min-h-[380px] reveal-up reveal-delay-1 ${inView ? "reveal-visible" : ""}`}>
           <div className="flex h-full items-center justify-center text-sm text-zinc-400">
             <Image
               src="/about-alinwash.png"
@@ -29,7 +34,7 @@ export default function WhyAlinwash() {
         </div>
 
         {/* 모바일 3순위: 항목·CTA (사진 아래) / 웹: 우측 2행 */}
-        <div className="order-3 md:col-start-2 md:row-start-2 text-left">
+        <div className={`order-3 md:col-start-2 md:row-start-2 text-left reveal-up reveal-delay-2 ${inView ? "reveal-visible" : ""}`}>
           {/* 항목 1 */}
           <div className="mt-2 md:mt-0">
             <h3 className="text-base font-bold text-primary md:text-lg">

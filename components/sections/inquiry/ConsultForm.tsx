@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useInViewOnce } from "@/hooks/useInViewOnce";
 
 interface FormData {
   name: string;
@@ -32,6 +33,7 @@ const initialForm: FormData = {
 };
 
 export default function ConsultForm() {
+  const { ref: sectionRef, inView } = useInViewOnce<HTMLDivElement>();
   const [form, setForm] = useState<FormData>(initialForm);
   const [errors, setErrors] = useState<FormErrors>({});
   const [submitted, setSubmitted] = useState(false);
@@ -87,7 +89,10 @@ export default function ConsultForm() {
   return (
     <section className="border-t border-zinc-100 py-12 md:py-24">
       <div className="!px-7 container-main">
-        <div className="mx-auto max-w-xl">
+        <div
+          ref={sectionRef}
+          className={`mx-auto max-w-xl reveal-up ${inView ? "reveal-visible" : ""}`}
+        >
           <h2 className="text-center text-[20px] font-bold tracking-[-0.04em] text-heading md:text-section-title">
             상세 상담 및 예약 신청
           </h2>
