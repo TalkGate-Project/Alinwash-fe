@@ -4,6 +4,7 @@ import { useState } from "react";
 import { format, parse } from "date-fns";
 import DateTimePicker from "@/components/DateTimePicker";
 import { useInViewOnce } from "@/hooks/useInViewOnce";
+import SubmitStatusModal from "@/components/SubmitStatusModal";
 
 interface FormData {
   name: string;
@@ -41,7 +42,7 @@ export default function BookingForm() {
   const [errors, setErrors] = useState<FormErrors>({});
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [submitModalType, setSubmitModalType] = useState<"success" | "error" | null>(null);
 
   const validate = (): FormErrors => {
     const newErrors: FormErrors = {};
@@ -68,7 +69,6 @@ export default function BookingForm() {
     e.preventDefault();
     const validationErrors = validate();
     setErrors(validationErrors);
-    setSubmitError(null);
 
     if (Object.keys(validationErrors).length === 0) {
       setSubmitting(true);
@@ -85,17 +85,16 @@ export default function BookingForm() {
             date: dateForServer,
           }),
         });
-        const data = (await res.json()) as { error?: string };
         if (!res.ok) {
-          setSubmitError(data.error ?? "제출에 실패했습니다. 다시 시도해 주세요.");
+          setSubmitModalType("error");
           return;
         }
         setSubmitted(true);
         setForm({ name: "", phone: "", date: "" });
         setErrors({});
-        setSubmitError(null);
+        setSubmitModalType("success");
       } catch {
-        setSubmitError("네트워크 오류가 발생했습니다. 다시 시도해 주세요.");
+        setSubmitModalType("error");
       } finally {
         setSubmitting(false);
       }
@@ -241,11 +240,6 @@ export default function BookingForm() {
 
                 {/* 제출 버튼 */}
                 <div className="flex flex-col gap-2 flex-shrink-0 pt-0 md:pt-6.5">
-                  {submitError && (
-                    <p className="text-sm text-red-500" role="alert">
-                      {submitError}
-                    </p>
-                  )}
                   <button
                     type="submit"
                     disabled={isButtonDisabled}
@@ -257,6 +251,11 @@ export default function BookingForm() {
               </form>
         </div>
       </div>
+      <SubmitStatusModal
+        open={submitModalType !== null}
+        type={submitModalType ?? "success"}
+        onClose={() => setSubmitModalType(null)}
+      />
     </section>
   );
 }
