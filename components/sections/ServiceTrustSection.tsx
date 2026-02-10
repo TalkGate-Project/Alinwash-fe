@@ -12,10 +12,10 @@ export default function ServiceTrustSection() {
         {/* 우측 텍스트 영역 */}
         <div className="flex items-center justify-center px-6 py-12 md:px-12 md:py-16 text-right">
           <div className="md:max-w-[528px] flex flex-col">
-          <h2 className="text-2xl font-semibold md:text-[36px] md:leading-[48px] text-on-dark tracking-[-0.04em]">
+          <h2 className="text-2xl font-semibold md:text-section-title-sm md:leading-[48px] text-on-dark tracking-[-0.04em]">
             만나지 않아도 믿을 수 있는 서비스
           </h2>
-          <div className="mt-6 md:mt-[48px] text-sm md:text-[20px] leading-relaxed md:leading-[28px] text-on-dark tracking-[-0.04em]">
+          <div className="mt-6 md:mt-[48px] text-sm md:text-eyebrow leading-relaxed md:leading-[28px] text-on-dark tracking-[-0.04em]">
             <p>업무 중이신가요?</p>
             <p>세차 전/후 사진 전송부터 완료 안내까지,</p>
             <p>대면하지 않아도 내 차의 상태를</p>

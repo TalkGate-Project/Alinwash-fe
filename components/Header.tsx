@@ -35,7 +35,7 @@ export default function Header({ variant = "default" }: HeaderProps) {
             <Link
               key={link.href}
               href={link.href}
-              className="text-[16px] font-medium text-zinc-300 transition-colors hover:text-white"
+              className="text-body font-medium text-zinc-300 transition-colors hover:text-white"
             >
               {link.label}
             </Link>

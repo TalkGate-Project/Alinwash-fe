@@ -89,7 +89,7 @@ export default function BookingForm() {
             </div>
           ) : (
             <>
-              <p className="mb-5 md:mb-[30px] flex items-center gap-2 text-[20px] font-bold">
+              <p className="mb-5 md:mb-[30px] flex items-center gap-2 text-eyebrow font-bold">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="shrink-0 text-primary">
                   <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
@@ -102,7 +102,7 @@ export default function BookingForm() {
               >
                 {/* 이름 */}
                 <div className="flex-1">
-                  <label className="mb-1 block text-[14px] font-medium">
+                  <label className="mb-1 block text-small font-medium">
                     이름 <span className="text-red-500">*</span>
                   </label>
                   <div className="relative">
@@ -125,7 +125,7 @@ export default function BookingForm() {
 
                 {/* 연락처 */}
                 <div className="flex-1">
-                  <label className="mb-1 block text-[14px] font-medium">
+                  <label className="mb-1 block text-small font-medium">
                     연락처 <span className="text-red-500">*</span>
                   </label>
                   <div className="relative">
@@ -147,7 +147,7 @@ export default function BookingForm() {
 
                 {/* 예약일시 */}
                 <div className="flex-1">
-                  <label className="mb-1 block text-[14px] font-medium">
+                  <label className="mb-1 block text-small font-medium">
                     예약일시 <span className="text-red-500">*</span>
                   </label>
                   <div className="relative">
@@ -198,7 +198,7 @@ export default function BookingForm() {
                 <div className="flex-shrink-0 pt-0 md:pt-6.5">
                   <button
                     type="submit"
-                    className="md:min-w-[288px] md:min-h-[48px] w-full rounded-[50px] bg-primary px-6 text-[16px] font-semibold text-white transition-colors hover:bg-primary-hover md:w-auto"
+                    className="md:min-w-[288px] md:min-h-[48px] w-full rounded-[50px] bg-primary px-6 text-body font-semibold text-white transition-colors hover:bg-primary-hover md:w-auto"
                   >
                     견적 및 예약상담
                   </button>

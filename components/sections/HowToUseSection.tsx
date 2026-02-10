@@ -55,18 +55,18 @@ export default function HowToUseSection() {
           {STEPS.map((item) => (
             <div key={item.step} className="flex flex-col">
               {/* Step Badge */}
-              <span className="flex items-center justify-center md:w-[72px] md:h-[34px] inline-flex w-fit rounded-full bg-primary text-[14px] font-semibold text-white">
+              <span className="flex items-center justify-center md:w-[72px] md:h-[34px] inline-flex w-fit rounded-full bg-primary text-small font-semibold text-white">
                 Step {item.step}
               </span>
 
-              <h3 className="mt-4 text-base font-bold md:text-[20px] md:leading-[28px] tracking-[-0.04em]">{item.title}</h3>
+              <h3 className="mt-4 text-base font-bold md:text-eyebrow md:leading-[28px] tracking-[-0.04em]">{item.title}</h3>
 
               {/* icon placeholder */}
               <div className="mt-4.5 flex h-10 w-10 items-center justify-center rounded-lg text-primary">
                 {item.icon}
               </div>
 
-              <p className="mt-4.5 text-[18px] leading-relaxed text-muted-light tracking-[-0.04em] md:max-w-[200px]">
+              <p className="mt-4.5 text-body leading-relaxed text-muted-light tracking-[-0.04em] md:max-w-[200px]">
                 {item.description}
               </p>
             </div>

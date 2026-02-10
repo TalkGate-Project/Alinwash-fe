@@ -16,7 +16,7 @@ export default function CTASection() {
         />
       </div>
       <div className="container-main relative z-10 flex h-full items-center justify-center">
-        <h2 className="text-[36px] leading-[48px] tracking-[-0.04em] font-semibold">
+        <h2 className="text-section-title-sm leading-[48px] tracking-[-0.04em] font-semibold">
           가장 편안한 장소에서 만나는 깨끗함. 지금 바로 경험해 보세요.
         </h2>
       </div>

@@ -43,7 +43,7 @@ export default function FeaturesSection() {
   return (
     <section className="md:pt-[132px] md:pb-[166px]">
       <div className="container-main">
-        <h2 className="text-center text-2xl font-semibold md:text-[36px]">
+        <h2 className="text-center text-2xl font-semibold md:text-section-title-sm">
           당신의 일상을 바꾸는 스마트한 차량 관리
         </h2>
 
@@ -57,10 +57,10 @@ export default function FeaturesSection() {
               <div className="flex h-[58px] w-[58px] items-center justify-center rounded-[10px] bg-background text-primary text-sm font-bold shadow-[0px_0px_16px_0px_#0000001A]">
                 {feature.icon}
               </div>
-              <h3 className="mt-8 text-base font-bold md:text-[24px]">
+              <h3 className="mt-8 text-base font-bold md:text-card-title">
                 {feature.title}
               </h3>
-              <p className="mt-8 text-[18px] leading-relaxed text-zinc-500">
+              <p className="mt-8 text-body leading-relaxed text-zinc-500">
                 {feature.description}
               </p>
             </div>

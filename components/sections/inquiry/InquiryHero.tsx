@@ -14,8 +14,8 @@ export default function InquiryHero() {
       </div>
       <div className="container-main relative z-10 flex flex-1 items-center pb-8 pt-20 pointer-events-none">
         <div className="pointer-events-auto">
-        <h1 className="text-[42px] font-bold leading-[-0.04em] text-on-dark-muted">온라인 문의</h1>
-        <p className="mt-3 text-[18px] text-on-dark">
+        <h1 className="text-hero-title font-bold leading-[-0.04em] text-on-dark-muted">온라인 문의</h1>
+        <p className="mt-3 text-body text-on-dark">
           궁금한 점이 있다면 언제든 문의 주세요.
         </p>
         </div>

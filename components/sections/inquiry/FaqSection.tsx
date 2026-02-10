@@ -41,10 +41,10 @@ export default function FaqSection() {
   return (
     <section className="bg-surface-faq py-16 md:py-24">
       <div className="container-main">
-        <p className="text-center text-[20px] font-semibold text-heading">
+        <p className="text-center text-eyebrow font-semibold text-heading">
           FAQ&apos;S
         </p>
-        <h2 className="mt-2 text-center text-2xl font-bold md:text-[48px] tracking-[-0.04em] text-heading">
+        <h2 className="mt-2 text-center text-2xl font-bold md:text-section-title tracking-[-0.04em] text-heading">
           서비스 이용 문의
         </h2>
 

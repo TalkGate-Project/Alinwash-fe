@@ -14,12 +14,12 @@ export default function HeroSection() {
       </div>
       <div className="container-main relative z-10 flex flex-1 items-center pb-8 pt-20 pointer-events-none">
         <div className="pointer-events-auto">
-        <h1 className="text-[42px] font-bold leading-[-0.04em] text-on-dark-muted">
+        <h1 className="text-hero-title font-bold leading-[-0.04em] text-on-dark-muted">
           내 차가 가장 깨끗해지는 시간,
           <br />
           아린워시(Alinwash)
         </h1>
-        <p className="mt-4 text-[18px] text-on-dark">
+        <p className="mt-4 text-body text-on-dark">
           3050 오너드라이버가 선택한 No.1 디테일링 출장 세차
         </p>
         </div>

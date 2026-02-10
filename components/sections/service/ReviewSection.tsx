@@ -65,13 +65,13 @@ export default function ReviewSection() {
   return (
     <section className="bg-white py-16 md:py-24">
       <div className="container-main">
-        <p className="text-[20px] font-semibold leading-[130%] text-heading">
+        <p className="text-eyebrow font-semibold leading-[130%] text-heading">
           Review
         </p>
-        <h2 className="mt-6 text-2xl font-bold tracking-[-0.04em] text-black md:text-[48px] md:leading-[138%]">
+        <h2 className="mt-6 text-2xl font-bold tracking-[-0.04em] text-black md:text-section-title md:leading-[138%]">
           고객님들의 생생한 리뷰
         </h2>
-        <p className="mt-6 max-w-[560px] text-[18px] leading-snug tracking-[-0.04em] text-muted">
+        <p className="mt-6 max-w-[560px] text-body leading-snug tracking-[-0.04em] text-muted">
           이미 많은 분이 아린워시의 차별화된 디테일링으로 일상의 여유를 찾고
           계십니다.
         </p>

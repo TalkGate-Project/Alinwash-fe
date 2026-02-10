@@ -38,11 +38,11 @@ export default function ServicesGrid() {
   return (
     <section className="bg-surface py-16 md:pt-[90px] md:pb-[135px]">
       <div className="container-main text-center">
-        <p className="text-sm md:text-[20px] font-semibold leading-[28px] tracking-[-0.04em] text-heading">Services</p>
-        <h2 className="mt-2 md:mt-5 text-2xl font-bold md:text-[48px] tracking-[-0.04em] text-heading">
+        <p className="text-sm md:text-eyebrow font-semibold leading-[28px] tracking-[-0.04em] text-heading">Services</p>
+        <h2 className="mt-2 md:mt-5 text-2xl font-bold md:text-section-title tracking-[-0.04em] text-heading">
           차를 위한 가장 완벽한 선택
         </h2>
-          <p className="mx-auto mt-4 md:mt-6 text-sm md:text-[18px] leading-[2] text-muted">
+          <p className="mx-auto mt-4 md:mt-6 text-sm md:text-body leading-[2] text-muted">
           찾아가는 편리함부터 확실한 사후 관리까지,<br/>
           번거로운 세차 과정은 줄이고, 전문가의 세심한 손길로 최상의 컨디션을 유지합니다.
         </p>
@@ -62,10 +62,10 @@ export default function ServicesGrid() {
                   className="object-contain"
                 />
               </div>
-              <h3 className="mt-4 text-[28px] font-bold tracking-[-0.04em] text-heading">
+              <h3 className="mt-4 text-subsection-title font-bold tracking-[-0.04em] text-heading">
                 {service.title}
               </h3>
-              <p className="mt-2 text-[14px] leading-relaxed text-muted md:text-[14px] tracking-[-0.04em]">
+              <p className="mt-2 text-small leading-relaxed text-muted tracking-[-0.04em]">
                 {service.description}
               </p>
             </div>

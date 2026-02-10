@@ -47,6 +47,16 @@
   --font-pretendard: "Pretendard", ui-sans-serif, system-ui, sans-serif;
   --font-montserrat: var(--font-montserrat), "Montserrat", ui-sans-serif,
     system-ui, sans-serif;
+
+  /* 타이포 – 글자 크기 (의미 있는 토큰) */
+  --text-hero-title: 42px;
+  --text-section-title: 48px;
+  --text-section-title-sm: 36px;
+  --text-subsection-title: 28px;
+  --text-card-title: 24px;
+  --text-eyebrow: 20px;
+  --text-body: 16px;
+  --text-small: 14px;
 }
 
 body {

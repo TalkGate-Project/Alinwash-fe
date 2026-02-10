@@ -14,8 +14,8 @@ export default function ServiceHero() {
       </div>
       <div className="container-main relative z-10 flex flex-1 items-center pb-8 pt-20 pointer-events-none">
         <div className="pointer-events-auto">
-        <h1 className="text-[42px] font-bold leading-[-0.04em] text-on-dark-muted">서비스 소개</h1>
-        <p className="mt-3 text-[18px] text-on-dark">
+        <h1 className="text-hero-title font-bold leading-[-0.04em] text-on-dark-muted">서비스 소개</h1>
+        <p className="mt-3 text-body text-on-dark">
           가장 편안한 세차 경험, 아린워시를 소개합니다.
         </p>
         </div>

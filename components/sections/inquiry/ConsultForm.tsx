@@ -88,10 +88,10 @@ export default function ConsultForm() {
     <section className="border-t border-zinc-100 py-16 md:py-24">
       <div className="container-main">
         <div className="mx-auto max-w-xl">
-          <h2 className="text-center text-2xl font-bold md:text-[48px] tracking-[-0.04em] text-heading">
+          <h2 className="text-center text-2xl font-bold md:text-section-title tracking-[-0.04em] text-heading">
             상세 상담 및 예약 신청
           </h2>
-          <p className="mt-3 text-center text-[18px] text-muted">
+          <p className="mt-3 text-center text-body text-muted">
             연락처를 남겨주시면, 확인 후 빠르고 상세한 안내를 도와드리겠습니다.
           </p>
 
