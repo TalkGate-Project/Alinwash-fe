@@ -25,8 +25,8 @@ export default function HeroSection() {
       <div className="absolute top-0 left-0 right-0 z-20">
         <Header variant="overlay" />
       </div>
-      <div className="container-main relative z-10 flex flex-1 items-center pb-6 pt-12 md:pb-8 md:pt-20 pointer-events-none">
-        <div className="pointer-events-auto">
+      <div className="container-main relative z-10 flex flex-1 items-center pb-6 pt-12 md:pb-8 md:pt-4 pointer-events-none">
+        <div className="pointer-events-auto hero-text-fade">
         <h1 className="hidden md:block text-hero-title font-bold leading-[-0.04em] text-on-dark-muted">
           내 차가 가장 깨끗해지는 시간,
           <br />

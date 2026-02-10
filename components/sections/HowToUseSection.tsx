@@ -1,3 +1,7 @@
+"use client";
+
+import { useInViewOnce } from "@/hooks/useInViewOnce";
+
 const STEPS = [
   {
     step: 1,
@@ -49,18 +53,20 @@ const STEP_ORDER_MOBILE = { 1: "order-0", 2: "order-3", 3: "order-2", 4: "order-
 const STEP_ORDER_LG = { 1: "lg:order-1", 2: "lg:order-2", 3: "lg:order-3", 4: "lg:order-4" } as const;
 
 export default function HowToUseSection() {
+  const { ref: sectionRef, inView } = useInViewOnce<HTMLElement>();
+
   return (
-    <section className="bg-[#F1F4FF] py-12 md:bg-transparent md:py-24">
+    <section ref={sectionRef} className="bg-[#F1F4FF] py-12 md:bg-transparent md:py-24">
       <div className="container-main">
-        <h2 className="text-center text-[18px] font-bold leading-[48px] tracking-[-0.04em] text-black md:text-left md:leading-normal md:text-3xl">
+        <h2 className={`text-center text-[18px] font-bold leading-[48px] tracking-[-0.04em] text-black md:text-left md:leading-normal md:text-3xl reveal-fade ${inView ? "reveal-visible" : ""}`}>
           이용방법
         </h2>
 
         <div className="mt-12 grid grid-cols-2 gap-x-[27px] gap-y-3 md:mt-[62px] md:grid-cols-2 md:gap-x-5 md:gap-y-8 lg:grid-cols-4">
-          {STEPS.map((item) => (
+          {STEPS.map((item, index) => (
             <div
               key={item.step}
-              className={`flex flex-col items-center gap-3 md:items-start md:gap-0 ${STEP_ORDER_MOBILE[item.step as 1 | 2 | 3 | 4]} ${STEP_ORDER_LG[item.step as 1 | 2 | 3 | 4]}`}
+              className={`flex flex-col items-center gap-3 md:items-start md:gap-0 ${STEP_ORDER_MOBILE[item.step as 1 | 2 | 3 | 4]} ${STEP_ORDER_LG[item.step as 1 | 2 | 3 | 4]} reveal-up reveal-delay-${index + 1} ${inView ? "reveal-visible" : ""}`}
             >
               {/* Step Badge - 피그마: 72x28, rounded 20px, 14px semibold */}
               <span className="flex h-7 w-[72px] flex-none items-center justify-center rounded-[20px] bg-primary text-small font-semibold tracking-[-0.02em] text-white md:h-[34px] md:w-[72px]">

@@ -1,11 +1,15 @@
 "use client";
 
 import { useState } from "react";
+import { useInViewOnce } from "@/hooks/useInViewOnce";
+import { format, parse } from "date-fns";
+import DateTimePicker from "@/components/DateTimePicker";
+import SubmitStatusModal from "@/components/SubmitStatusModal";
 
 interface FormData {
   name: string;
   phone: string;
-  time: string;
+  time: string; // "yyyy-MM-dd'T'HH:mm"
   carNumber: string;
   carModel: string;
   address: string;
@@ -31,10 +35,21 @@ const initialForm: FormData = {
   agree: false,
 };
 
+function formatPhoneInput(value: string): string {
+  const digits = value.replace(/\D/g, "").slice(0, 11);
+  const len = digits.length;
+  if (len <= 3) return digits;
+  if (len <= 6) return `${digits.slice(0, 3)}-${digits.slice(3)}`;
+  if (len <= 10) return `${digits.slice(0, 3)}-${digits.slice(3, 6)}-${digits.slice(6)}`;
+  return `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(7)}`;
+}
+
 export default function ConsultForm() {
+  const { ref: sectionRef, inView } = useInViewOnce<HTMLDivElement>();
   const [form, setForm] = useState<FormData>(initialForm);
   const [errors, setErrors] = useState<FormErrors>({});
-  const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitModalType, setSubmitModalType] = useState<"success" | "error" | null>(null);
 
   const validate = (): FormErrors => {
     const newErrors: FormErrors = {};
@@ -43,10 +58,11 @@ export default function ConsultForm() {
       newErrors.name = "이름을 입력해 주세요.";
     }
 
+    const phoneDigits = form.phone.replace(/\D/g, "");
     if (!form.phone.trim()) {
       newErrors.phone = "연락처를 입력해 주세요.";
-    } else if (!/^[\d-]+$/.test(form.phone)) {
-      newErrors.phone = "올바른 연락처를 입력해 주세요.";
+    } else if (phoneDigits.length < 10 || phoneDigits.length > 11) {
+      newErrors.phone = "연락처는 10~11자리 숫자로 입력해 주세요.";
     }
 
     if (!form.time.trim()) {
@@ -60,14 +76,41 @@ export default function ConsultForm() {
     return newErrors;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const validationErrors = validate();
     setErrors(validationErrors);
 
     if (Object.keys(validationErrors).length === 0) {
-      setSubmitted(true);
-      // TODO: 백엔드 연동 시 여기에 API 호출
+      setSubmitting(true);
+      try {
+        const res = await fetch("/api/consult", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: form.name.trim(),
+            phone: form.phone.trim(),
+            time: form.time.trim(),
+            carNumber: form.carNumber.trim(),
+            carModel: form.carModel.trim(),
+            address: form.address.trim(),
+            content: form.content.trim(),
+            agree: form.agree,
+          }),
+        });
+        const data = (await res.json()) as { error?: string };
+        if (!res.ok) {
+          setSubmitModalType("error");
+          return;
+        }
+        setSubmitModalType("success");
+        setForm(initialForm);
+        setErrors({});
+      } catch {
+        setSubmitModalType("error");
+      } finally {
+        setSubmitting(false);
+      }
     }
   };
 
@@ -75,19 +118,37 @@ export default function ConsultForm() {
     field: keyof FormData,
     value: string | boolean
   ) => {
-    setForm((prev) => ({ ...prev, [field]: value }));
+    const nextValue =
+      field === "phone" && typeof value === "string"
+        ? formatPhoneInput(value)
+        : value;
+
+    setForm((prev) => ({ ...prev, [field]: nextValue }));
     if (field in errors) {
       setErrors((prev) => ({ ...prev, [field]: undefined }));
     }
   };
 
+  const phoneDigits = form.phone.replace(/\D/g, "");
+  const isSubmittable =
+    form.name.trim().length > 0 &&
+    phoneDigits.length >= 10 &&
+    phoneDigits.length <= 11 &&
+    form.time.trim().length > 0 &&
+    form.agree;
+
   const inputClass =
     "pl-4 w-full border-b border-zinc-200 bg-transparent py-3 text-sm outline-none transition-colors placeholder:text-zinc-400 focus:border-primary";
+  const dateTimeInputClass =
+    "!min-h-0 !h-auto !rounded-none !border-0 !border-b !border-zinc-200 !bg-transparent !px-4 !py-3 !text-sm !outline-none !transition-colors placeholder:!text-zinc-400 focus:!border-primary";
 
   return (
     <section className="border-t border-zinc-100 py-12 md:py-24">
       <div className="!px-7 container-main">
-        <div className="mx-auto max-w-xl">
+        <div
+          ref={sectionRef}
+          className={`mx-auto max-w-xl reveal-up ${inView ? "reveal-visible" : ""}`}
+        >
           <h2 className="text-center text-[20px] font-bold tracking-[-0.04em] text-heading md:text-section-title">
             상세 상담 및 예약 신청
           </h2>
@@ -95,31 +156,11 @@ export default function ConsultForm() {
             연락처를 남겨주시면,<br className="md:hidden" /> 확인 후 빠르고 정확한 안내를 도와드리겠습니다.
           </p>
 
-          {submitted ? (
-            <div className="mt-12 py-8 text-center">
-              <p className="text-lg font-semibold text-primary">
-                상담 신청이 접수되었습니다!
-              </p>
-              <p className="mt-2 text-sm text-zinc-500">
-                빠른 시일 내에 연락드리겠습니다.
-              </p>
-              <button
-                type="button"
-                className="mt-4 text-sm text-primary underline"
-                onClick={() => {
-                  setSubmitted(false);
-                  setForm(initialForm);
-                }}
-              >
-                다시 작성하기
-              </button>
-            </div>
-          ) : (
-            <form
-              onSubmit={handleSubmit}
-              noValidate
-              className="mt-12 space-y-6"
-            >
+          <form
+            onSubmit={handleSubmit}
+            noValidate
+            className="mt-12 space-y-6"
+          >
               {/* 이름 */}
               <div>
                 <label className="mb-1 block text-[16px] font-medium md:text-[18px]">
@@ -144,9 +185,12 @@ export default function ConsultForm() {
                 </label>
                 <input
                   type="tel"
+                  inputMode="numeric"
+                  autoComplete="tel"
                   placeholder="연락처를 입력하세요"
                   value={form.phone}
                   onChange={(e) => handleChange("phone", e.target.value)}
+                  maxLength={13}
                   className={inputClass}
                 />
                 {errors.phone && (
@@ -159,12 +203,23 @@ export default function ConsultForm() {
                 <label className="mb-1 block text-[16px] font-medium md:text-[18px]">
                   예약시간 <span className="text-red-500">*</span>
                 </label>
-                <input
-                  type="text"
-                  placeholder="예약시간을 입력하세요"
-                  value={form.time}
-                  onChange={(e) => handleChange("time", e.target.value)}
-                  className={inputClass}
+                <DateTimePicker
+                  value={
+                    form.time
+                      ? parse(form.time, "yyyy-MM-dd'T'HH:mm", new Date())
+                      : null
+                  }
+                  onChange={(date) =>
+                    handleChange(
+                      "time",
+                      date ? format(date, "yyyy-MM-dd'T'HH:mm") : ""
+                    )
+                  }
+                  placeholder="날짜와 시간을 선택해 주세요"
+                  dateFormat="yyyy. MM. dd HH시"
+                  minDate={new Date()}
+                  showMinute={false}
+                  className={dateTimeInputClass}
                 />
                 {errors.time && (
                   <p className="mt-1 text-xs text-red-500">{errors.time}</p>
@@ -262,14 +317,19 @@ export default function ConsultForm() {
               {/* 제출 버튼 */}
               <button
                 type="submit"
-                className="w-full rounded-[50px] bg-primary py-4 md:py-3.5 text-body font-semibold text-white transition-colors hover:bg-primary-hover"
+                disabled={submitting || !isSubmittable}
+                className="w-full rounded-[50px] bg-primary py-4 md:py-3.5 text-body font-semibold text-white transition-colors hover:bg-primary-hover disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                신청하기
+                {submitting ? "전송 중..." : "신청하기"}
               </button>
             </form>
-          )}
         </div>
       </div>
+      <SubmitStatusModal
+        open={submitModalType !== null}
+        type={submitModalType ?? "success"}
+        onClose={() => setSubmitModalType(null)}
+      />
     </section>
   );
 }

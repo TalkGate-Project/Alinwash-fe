@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { useInViewOnce } from "@/hooks/useInViewOnce";
 
 const REVIEWS = [
   {
@@ -58,24 +61,26 @@ function StarRating({ rating }: { rating: number }) {
 }
 
 export default function ReviewSection() {
+  const { ref: sectionRef, inView } = useInViewOnce<HTMLElement>();
+
   return (
-    <section className="bg-white py-9 md:py-24">
+    <section ref={sectionRef} className="bg-white py-9 md:py-24">
       <div className="container-main">
-        <p className="text-center text-small font-semibold text-muted md:text-left md:text-eyebrow md:leading-[130%] md:text-heading">
+        <p className={`text-center text-small font-semibold text-muted md:text-left md:text-eyebrow md:leading-[130%] md:text-heading reveal-fade ${inView ? "reveal-visible" : ""}`}>
           Review
         </p>
-        <h2 className="mt-2 md:mt-6 text-center text-[20px] font-bold tracking-[-0.04em] text-black md:text-left md:text-section-title md:leading-[138%]">
+        <h2 className={`mt-2 md:mt-6 text-center text-[20px] font-bold tracking-[-0.04em] text-black md:text-left md:text-section-title md:leading-[138%] reveal-fade reveal-delay-1 ${inView ? "reveal-visible" : ""}`}>
           고객님들의 생생한 리뷰
         </h2>
-        <p className="mt-4 md:mt-6 max-w-[560px] text-center text-small leading-snug tracking-[-0.04em] text-muted md:text-left md:text-body">
+        <p className={`mt-4 md:mt-6 max-w-[560px] text-center text-small leading-snug tracking-[-0.04em] text-muted md:text-left md:text-body reveal-fade reveal-delay-2 ${inView ? "reveal-visible" : ""}`}>
           이미 많은 분이 아린워시의 차별화된 디테일링으로<br className="md:hidden" /> 일상의 여유를 찾고 계십니다.
         </p>
 
         <div className="mt-12 flex flex-col gap-6 md:flex-row md:items-stretch md:gap-4 lg:gap-4">
-          {REVIEWS.map((review) => (
+          {REVIEWS.map((review, index) => (
             <article
               key={review.name}
-              className="flex flex-1 flex-col gap-6 rounded-xl bg-white p-8 shadow-[0px_4px_8px_rgba(0,0,0,0.1)] max-w-[320px] mx-auto md:max-w-[396px] md:mx-0"
+              className={`flex flex-1 flex-col gap-6 rounded-xl bg-white p-8 shadow-[0px_4px_8px_rgba(0,0,0,0.1)] max-w-[320px] mx-auto md:max-w-[396px] md:mx-0 reveal-up reveal-delay-${index + 1} ${inView ? "reveal-visible" : ""}`}
             >
               <StarRating rating={review.rating} />
               <div className="flex flex-1 flex-col gap-6">
