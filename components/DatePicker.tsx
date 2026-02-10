@@ -9,7 +9,7 @@ import { generateMonthCells } from "@/utils/calendar";
 function getBodyZoom(): number {
   if (typeof document === "undefined") return 1;
   const raw = String(
-    ((document.body.style as Record<string, unknown>).zoom ?? "") as string
+    ((document.body.style as unknown as Record<string, unknown>).zoom ?? "") as string
   ).trim();
   const parsed = Number.parseFloat(raw);
   return Number.isFinite(parsed) && parsed > 0 ? parsed : 1;
@@ -144,17 +144,6 @@ export default function DatePicker({
       window.removeEventListener("scroll", update, true);
     };
   }, [open, panelOffsetY]);
-
-  useEffect(() => {
-    if (!open) {
-      const base = value ? new Date(value) : new Date();
-      setView(new Date(base.getFullYear(), base.getMonth(), 1));
-      const syncMinYear = minDate ? minDate.getFullYear() : null;
-      const syncYearStart = syncMinYear ? syncMinYear : base.getFullYear() - 20;
-      setYearStart(syncYearStart);
-      setMode("month");
-    }
-  }, [value, open, minDate]);
 
   const label = useMemo(() => {
     const y = view.getFullYear();

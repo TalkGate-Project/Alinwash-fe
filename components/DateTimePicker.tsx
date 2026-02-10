@@ -9,7 +9,7 @@ import { generateMonthCells } from "@/utils/calendar";
 function getBodyZoom(): number {
   if (typeof document === "undefined") return 1;
   const raw = String(
-    ((document.body.style as Record<string, unknown>).zoom ?? "") as string
+    ((document.body.style as unknown as Record<string, unknown>).zoom ?? "") as string
   ).trim();
   const parsed = Number.parseFloat(raw);
   return Number.isFinite(parsed) && parsed > 0 ? parsed : 1;
@@ -276,7 +276,7 @@ export default function DateTimePicker({
         onFocus={openPicker}
         value={displayValue}
         placeholder={placeholder}
-        className={`h-[34px] w-full cursor-pointer rounded-lg border border-zinc-200 bg-white px-3 py-2.5 text-sm outline-none transition-colors placeholder:text-zinc-400 focus:border-primary disabled:opacity-50 md:min-h-[48px] md:h-[48px] ${className}`}
+        className={`min-h-[48px] h-[48px] w-full cursor-pointer rounded-lg border border-zinc-200 bg-white px-3 py-2.5 text-sm outline-none transition-colors placeholder:text-zinc-400 focus:border-primary disabled:opacity-50 ${className}`}
       />
 
       {open &&

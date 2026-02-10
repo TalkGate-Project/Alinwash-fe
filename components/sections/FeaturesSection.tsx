@@ -41,26 +41,26 @@ const FEATURES = [
 
 export default function FeaturesSection() {
   return (
-    <section className="md:pt-[132px] md:pb-[166px]">
+    <section className="py-12 md:pt-[132px] md:pb-[166px]">
       <div className="container-main">
-        <h2 className="text-center text-2xl font-semibold md:text-section-title-sm">
+        <h2 className="text-center text-[18px] font-semibold md:text-section-title-sm">
           당신의 일상을 바꾸는 스마트한 차량 관리
         </h2>
 
-        <div className="mt-12 md:mt-[88px] grid grid-cols-1 gap-6 md:gap-[42px] md:grid-cols-3">
+        <div className="mt-3 md:mt-[88px] grid grid-cols-1 gap-6 md:gap-[42px] md:grid-cols-3">
           {FEATURES.map((feature) => (
             <div
               key={feature.id}
-              className="md:min-h-[302px] rounded-[20px] bg-surface-card p-6 text-left transition-shadow hover:shadow-md md:p-[32px]"
+              className="md:min-h-[302px] rounded-[20px] bg-surface-card px-8 py-6 text-left transition-shadow hover:shadow-md md:p-[32px]"
             >
               {/* icon placeholder */}
               <div className="flex h-[58px] w-[58px] items-center justify-center rounded-[10px] bg-background text-primary text-sm font-bold shadow-[0px_0px_16px_0px_#0000001A]">
                 {feature.icon}
               </div>
-              <h3 className="mt-8 text-base font-bold md:text-card-title">
+              <h3 className="mt-5 md:mt-8 text-[18px] font-bold md:text-card-title">
                 {feature.title}
               </h3>
-              <p className="mt-8 text-body leading-relaxed text-zinc-500">
+              <p className="mt-5 md:mt-8 text-caption leading-relaxed text-zinc-500 md:text-body">
                 {feature.description}
               </p>
             </div>

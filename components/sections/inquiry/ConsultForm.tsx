@@ -85,14 +85,14 @@ export default function ConsultForm() {
     "pl-4 w-full border-b border-zinc-200 bg-transparent py-3 text-sm outline-none transition-colors placeholder:text-zinc-400 focus:border-primary";
 
   return (
-    <section className="border-t border-zinc-100 py-16 md:py-24">
-      <div className="container-main">
+    <section className="border-t border-zinc-100 py-12 md:py-24">
+      <div className="!px-7 container-main">
         <div className="mx-auto max-w-xl">
-          <h2 className="text-center text-2xl font-bold md:text-section-title tracking-[-0.04em] text-heading">
+          <h2 className="text-center text-[20px] font-bold tracking-[-0.04em] text-heading md:text-section-title">
             상세 상담 및 예약 신청
           </h2>
-          <p className="mt-3 text-center text-body text-muted">
-            연락처를 남겨주시면, 확인 후 빠르고 상세한 안내를 도와드리겠습니다.
+          <p className="mt-2 md:mt-3 text-center text-small text-muted md:text-body">
+            연락처를 남겨주시면,<br className="md:hidden" /> 확인 후 빠르고 정확한 안내를 도와드리겠습니다.
           </p>
 
           {submitted ? (
@@ -122,7 +122,7 @@ export default function ConsultForm() {
             >
               {/* 이름 */}
               <div>
-                <label className="mb-1 block text-sm font-medium">
+                <label className="mb-1 block text-[16px] font-medium md:text-[18px]">
                   이름 <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -139,7 +139,7 @@ export default function ConsultForm() {
 
               {/* 연락처 */}
               <div>
-                <label className="mb-1 block text-sm font-medium">
+                <label className="mb-1 block text-[16px] font-medium md:text-[18px]">
                   연락처 <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -156,7 +156,7 @@ export default function ConsultForm() {
 
               {/* 예약시간 */}
               <div>
-                <label className="mb-1 block text-sm font-medium">
+                <label className="mb-1 block text-[16px] font-medium md:text-[18px]">
                   예약시간 <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -173,7 +173,7 @@ export default function ConsultForm() {
 
               {/* 차량번호 */}
               <div>
-                <label className="mb-1 block text-sm font-medium">
+                <label className="mb-1 block text-[16px] font-medium md:text-[18px]">
                   차량번호
                 </label>
                 <input
@@ -187,7 +187,7 @@ export default function ConsultForm() {
 
               {/* 차종/색상 */}
               <div>
-                <label className="mb-1 block text-sm font-medium">
+                <label className="mb-1 block text-[16px] font-medium md:text-[18px]">
                   차종/색상{" "}
                   <span className="text-zinc-400">
                     (ex. 현대 제네시스 검정)
@@ -204,7 +204,7 @@ export default function ConsultForm() {
 
               {/* 주소 */}
               <div>
-                <label className="mb-1 block text-sm font-medium">
+                <label className="mb-1 block text-[16px] font-medium md:text-[18px]">
                   주소{" "}
                   <span className="text-zinc-400">
                     (ex. 아파트명 000동 000호)
@@ -221,7 +221,7 @@ export default function ConsultForm() {
 
               {/* 상담내용 */}
               <div>
-                <label className="mb-1 block text-sm font-medium">
+                <label className="mb-1 block text-[16px] font-medium md:text-[18px]">
                   상담내용
                 </label>
                 <textarea
@@ -236,7 +236,7 @@ export default function ConsultForm() {
               {/* 개인정보 동의 */}
               <div>
                 <div className="flex justify-between items-start gap-2">
-                  <label className="flex items-start gap-2 text-sm">
+                  <label className="flex items-center gap-2 text-[16px] md:text-[18px]">
                     <input
                       type="checkbox"
                       checked={form.agree}
@@ -262,7 +262,7 @@ export default function ConsultForm() {
               {/* 제출 버튼 */}
               <button
                 type="submit"
-                className="w-full rounded-[50px] bg-primary py-3.5 text-sm font-semibold text-white transition-colors hover:bg-primary-hover"
+                className="w-full rounded-[50px] bg-primary py-4 md:py-3.5 text-body font-semibold text-white transition-colors hover:bg-primary-hover"
               >
                 신청하기
               </button>

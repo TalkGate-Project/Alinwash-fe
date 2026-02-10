@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { useRef, useState, useCallback } from "react";
 
 const SERVICE_ICONS = [
   "/service-introduce-01.png",
@@ -35,19 +38,90 @@ const SERVICES = [
 ];
 
 export default function ServicesGrid() {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const onScroll = useCallback(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const scrollable = el.scrollWidth - el.clientWidth;
+    if (scrollable <= 0) {
+      setActiveIndex(0);
+      return;
+    }
+    const step = scrollable / (SERVICES.length - 1);
+    const index = Math.round(el.scrollLeft / step);
+    setActiveIndex(Math.min(Math.max(0, index), SERVICES.length - 1));
+  }, []);
+
   return (
-    <section className="bg-surface py-16 md:pt-[90px] md:pb-[135px]">
+    <section className="bg-surface py-9 md:py-16 md:pt-[90px] md:pb-[135px]">
       <div className="container-main text-center">
-        <p className="text-sm md:text-eyebrow font-semibold leading-[28px] tracking-[-0.04em] text-heading">Services</p>
-        <h2 className="mt-2 md:mt-5 text-2xl font-bold md:text-section-title tracking-[-0.04em] text-heading">
+        <p className="text-small font-semibold text-muted md:text-eyebrow md:leading-[28px] md:tracking-[-0.04em] md:text-heading">
+          What&apos;s Next?
+        </p>
+        <h2 className="mt-2 text-[20px] font-bold tracking-[-0.04em] text-heading md:mt-5 md:text-section-title">
           차를 위한 가장 완벽한 선택
         </h2>
-          <p className="mx-auto mt-4 md:mt-6 text-sm md:text-body leading-[2] text-muted">
-          찾아가는 편리함부터 확실한 사후 관리까지,<br/>
+        <p className="px-7 mx-auto mt-4 text-small leading-relaxed text-muted md:mt-6 md:text-body md:leading-[2] !text-left">
+          찾아가는 편리함부터 확실한 사후 관리까지,<br />
           번거로운 세차 과정은 줄이고, 전문가의 세심한 손길로 최상의 컨디션을 유지합니다.
         </p>
 
-        <div className="mt-12 md:mt-[75px] grid grid-cols-2 gap-4 md:gap-5 lg:grid-cols-4">
+        {/* 모바일: 가로 스크롤 캐러셀 */}
+        <div className="mt-[30px] md:mt-[75px] md:hidden">
+          <div
+            ref={scrollRef}
+            onScroll={onScroll}
+            className="px-7 flex gap-4 overflow-x-auto overflow-y-hidden pb-2 snap-x snap-mandatory scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden [-webkit-overflow-scrolling:touch]"
+          >
+            {SERVICES.map((service, index) => (
+              <div
+                key={service.icon}
+                className="flex min-w-[min(280px,78vw)] max-w-[78vw] flex-shrink-0 snap-center rounded-xl bg-white p-5 shadow-[0px_4px_8px_rgba(0,0,0,0.08)] flex flex-col items-center justify-center"
+              >
+                <div className="relative mx-auto overflow-hidden rounded-lg">
+                  <Image
+                    src={SERVICE_ICONS[index]}
+                    alt=""
+                    width={94}
+                    height={78}
+                    className="object-contain"
+                  />
+                </div>
+                <h3 className="mt-4 text-base font-bold tracking-[-0.04em] text-heading md:text-subsection-title">
+                  {service.title}
+                </h3>
+                <p className="mt-2 text-small leading-relaxed tracking-[-0.04em] text-muted">
+                  {service.description}
+                </p>
+              </div>
+            ))}
+          </div>
+          {/* 캐러셀 도트 */}
+          <div className="mt-4 flex justify-center gap-2" aria-hidden>
+            {SERVICES.map((_, index) => (
+              <button
+                key={index}
+                type="button"
+                onClick={() => {
+                  const el = scrollRef.current;
+                  if (el) {
+                    const step = (el.scrollWidth - el.clientWidth) / Math.max(1, SERVICES.length - 1);
+                    el.scrollTo({ left: index * step, behavior: "smooth" });
+                  }
+                }}
+                className={`h-2 w-2 rounded-full transition-colors ${
+                  index === activeIndex ? "bg-primary" : "bg-zinc-300"
+                }`}
+                aria-label={`${index + 1}번 슬라이드`}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* 데스크톱: 그리드 */}
+        <div className="mt-12 hidden grid-cols-2 gap-4 md:mt-[75px] md:grid md:gap-5 lg:grid-cols-4">
           {SERVICES.map((service, index) => (
             <div
               key={service.icon}
