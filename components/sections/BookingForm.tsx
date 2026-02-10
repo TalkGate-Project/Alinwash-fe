@@ -65,9 +65,9 @@ export default function BookingForm() {
   };
 
   return (
-    <section className="relative z-10 -mt-16 md:-mt-20">
+    <section className="relative z-10 -mt-64 md:-mt-20">
       <div className="container-main">
-        <div className="rounded-xl bg-white p-6 shadow-[0px_8px_12px_0px_#091E421A] md:px-[52px] md:pt-[44px] md:pb-[48px]">
+        <div className="rounded-[24px] bg-white p-6 shadow-[0px_8px_12px_0px_#091E421A] md:px-[52px] md:pt-[44px] md:pb-[48px]">
           {submitted ? (
             <div className="py-4 text-center">
               <p className="text-lg font-semibold text-primary">
@@ -89,7 +89,7 @@ export default function BookingForm() {
             </div>
           ) : (
             <>
-              <p className="mb-5 md:mb-[30px] flex items-center gap-2 text-[20px] font-bold">
+              <p className="mb-5 md:mb-[30px] flex items-center gap-2 text-body font-bold md:text-eyebrow">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="shrink-0 text-primary">
                   <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
@@ -102,7 +102,7 @@ export default function BookingForm() {
               >
                 {/* 이름 */}
                 <div className="flex-1">
-                  <label className="mb-1 block text-[14px] font-medium">
+                  <label className="mb-1 block text-small font-medium">
                     이름 <span className="text-red-500">*</span>
                   </label>
                   <div className="relative">
@@ -115,17 +115,19 @@ export default function BookingForm() {
                       placeholder="이름을 입력해주세요"
                       value={form.name}
                       onChange={(e) => handleChange("name", e.target.value)}
-                      className="w-full md:min-h-[48px] rounded-lg border border-zinc-200 px-3 pl-10 py-2.5 text-sm outline-none transition-colors focus:border-primary"
+                      className="w-full min-h-[48px] rounded-lg border border-zinc-200 px-3 pl-10 py-2.5 text-sm outline-none transition-colors focus:border-primary"
                     />
                   </div>
-                  <div className="min-h-5 mt-1 text-xs text-red-500" role="alert" aria-live="polite">
-                    {errors.name ?? "\u00A0"}
-                  </div>
+                  {errors.name && (
+                    <div className="mt-1 text-xs text-red-500" role="alert" aria-live="polite">
+                      {errors.name}
+                    </div>
+                  )}
                 </div>
 
                 {/* 연락처 */}
                 <div className="flex-1">
-                  <label className="mb-1 block text-[14px] font-medium">
+                  <label className="mb-1 block text-small font-medium">
                     연락처 <span className="text-red-500">*</span>
                   </label>
                   <div className="relative">
@@ -137,18 +139,20 @@ export default function BookingForm() {
                       placeholder="연락처를 입력해주세요"
                       value={form.phone}
                       onChange={(e) => handleChange("phone", e.target.value)}
-                      className="w-full md:min-h-[48px] rounded-lg border border-zinc-200 px-3 pl-10 py-2.5 text-sm outline-none transition-colors focus:border-primary"
+                      className="w-full min-h-[48px] rounded-lg border border-zinc-200 px-3 pl-10 py-2.5 text-sm outline-none transition-colors focus:border-primary"
                     />
                   </div>
-                  <div className="min-h-5 mt-1 text-xs text-red-500" role="alert" aria-live="polite">
-                    {errors.phone ?? "\u00A0"}
-                  </div>
+                  {errors.phone && (
+                    <div className="mt-1 text-xs text-red-500" role="alert" aria-live="polite">
+                      {errors.phone}
+                    </div>
+                  )}
                 </div>
 
                 {/* 예약일시 */}
                 <div className="flex-1">
-                  <label className="mb-1 block text-[14px] font-medium">
-                    예약일시 <span className="text-red-500">*</span>
+                  <label className="mb-1 block text-small font-medium">
+                    예약시간 <span className="text-red-500">*</span>
                   </label>
                   <div className="relative">
                     <svg
@@ -189,16 +193,18 @@ export default function BookingForm() {
                       />
                     </div>
                   </div>
-                  <div className="min-h-5 mt-1 text-xs text-red-500" role="alert" aria-live="polite">
-                    {errors.date ?? "\u00A0"}
-                  </div>
+                  {errors.date && (
+                    <div className="mt-1 text-xs text-red-500" role="alert" aria-live="polite">
+                      {errors.date}
+                    </div>
+                  )}
                 </div>
 
                 {/* 제출 버튼 */}
                 <div className="flex-shrink-0 pt-0 md:pt-6.5">
                   <button
                     type="submit"
-                    className="md:min-w-[288px] md:min-h-[48px] w-full rounded-[50px] bg-primary px-6 text-[16px] font-semibold text-white transition-colors hover:bg-primary-hover md:w-auto"
+                    className="min-h-[48px] w-full rounded-[50px] bg-primary px-6 text-body font-semibold text-white transition-colors hover:bg-primary-hover md:min-w-[288px] md:w-auto"
                   >
                     견적 및 예약상담
                   </button>

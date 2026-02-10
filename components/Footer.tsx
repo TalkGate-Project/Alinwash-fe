@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const FOOTER_LINKS = [
   { href: "#", label: "개인정보처리방침" },
-  { href: "#", label: "이용약관" },
+  { href: "#", label: "브랜드 리소스" },
 ];
 
 const SOCIAL_LINKS = [
@@ -60,45 +60,68 @@ const SOCIAL_LINKS = [
   },
 ];
 
+const copyright = "Copyright © Alinwash 2026. All rights reserved.";
+
 export default function Footer() {
   return (
     <footer className="w-full bg-surface-footer text-footer-text">
       <div className="container-main py-10">
-        {/* Top Row */}
-        <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-          {/* Links */}
-          <div className="flex flex-wrap gap-4 text-sm">
-            {FOOTER_LINKS.map((link) => (
-              <Link
-                key={link.label}
-                href={link.href}
-                className="transition-colors hover:text-white"
-              >
-                {link.label}
-              </Link>
+        {/* 모바일: 세로 중앙 (링크 | 저작권 | SNS) */}
+        <div className="flex flex-col items-center text-center md:hidden">
+          <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-xs">
+            {FOOTER_LINKS.map((link, i) => (
+              <span key={link.label} className="inline-flex items-center gap-x-2">
+                {i > 0 && <span className="text-zinc-500" aria-hidden>|</span>}
+                <Link href={link.href} className="transition-colors hover:text-zinc-300">
+                  {link.label}
+                </Link>
+              </span>
             ))}
           </div>
-
-          {/* Social placeholder */}
-          <div className="flex gap-4">
+          <p className="mt-2 text-sm text-zinc-500">{copyright}</p>
+          <div className="mt-2 flex items-center justify-center gap-1.5">
             {SOCIAL_LINKS.map((social) => (
               <a
                 key={social.label}
                 href={social.href}
                 aria-label={social.label}
-                className="flex h-8 w-8 items-center justify-center transition-colors"
+                className="flex h-8 w-8 items-center justify-center text-zinc-500 transition-colors hover:text-zinc-300 [&_svg]:h-full [&_svg]:w-full"
               >
-                {/* icon placeholder */}
                 {social.icon}
               </a>
             ))}
           </div>
         </div>
 
-        {/* Copyright */}
-        <p className="mt-8 text-xs text-zinc-500">
-          Copyright &copy; Alinwash 2026. All rights reserved.
-        </p>
+        {/* 웹: 왼쪽 링크+카피라이트 | 오른쪽 SNS(세로 가운데) */}
+        <div className="hidden md:flex md:items-center md:justify-between">
+          <div className="flex flex-col gap-4">
+            <div className="flex flex-wrap gap-4 text-sm">
+              {FOOTER_LINKS.map((link) => (
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  className="transition-colors hover:text-zinc-300"
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+            <p className="text-sm text-zinc-500">{copyright}</p>
+          </div>
+          <div className="flex items-center gap-3">
+            {SOCIAL_LINKS.map((social) => (
+              <a
+                key={social.label}
+                href={social.href}
+                aria-label={social.label}
+                className="flex h-10 w-10 items-center justify-center text-zinc-500 transition-colors hover:text-zinc-300 [&_svg]:h-full [&_svg]:w-full"
+              >
+                {social.icon}
+              </a>
+            ))}
+          </div>
+        </div>
       </div>
     </footer>
   );

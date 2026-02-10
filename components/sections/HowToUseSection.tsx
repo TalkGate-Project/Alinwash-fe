@@ -45,28 +45,40 @@ const STEPS = [
   },
 ];
 
+const STEP_ORDER_MOBILE = { 1: "order-0", 2: "order-3", 3: "order-2", 4: "order-1" } as const;
+const STEP_ORDER_LG = { 1: "lg:order-1", 2: "lg:order-2", 3: "lg:order-3", 4: "lg:order-4" } as const;
+
 export default function HowToUseSection() {
   return (
-    <section className="py-16 md:py-24">
+    <section className="bg-[#F1F4FF] py-12 md:bg-transparent md:py-24">
       <div className="container-main">
-        <h2 className="text-2xl font-bold md:text-3xl">이용방법</h2>
+        <h2 className="text-center text-[18px] font-bold leading-[48px] tracking-[-0.04em] text-black md:text-left md:leading-normal md:text-3xl">
+          이용방법
+        </h2>
 
-        <div className="mt-12 md:mt-[62px] grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-12 grid grid-cols-2 gap-x-[27px] gap-y-3 md:mt-[62px] md:grid-cols-2 md:gap-x-5 md:gap-y-8 lg:grid-cols-4">
           {STEPS.map((item) => (
-            <div key={item.step} className="flex flex-col">
-              {/* Step Badge */}
-              <span className="flex items-center justify-center md:w-[72px] md:h-[34px] inline-flex w-fit rounded-full bg-primary text-[14px] font-semibold text-white">
+            <div
+              key={item.step}
+              className={`flex flex-col items-center gap-3 md:items-start md:gap-0 ${STEP_ORDER_MOBILE[item.step as 1 | 2 | 3 | 4]} ${STEP_ORDER_LG[item.step as 1 | 2 | 3 | 4]}`}
+            >
+              {/* Step Badge - 피그마: 72x28, rounded 20px, 14px semibold */}
+              <span className="flex h-7 w-[72px] flex-none items-center justify-center rounded-[20px] bg-primary text-small font-semibold tracking-[-0.02em] text-white md:h-[34px] md:w-[72px]">
                 Step {item.step}
               </span>
 
-              <h3 className="mt-4 text-base font-bold md:text-[20px] md:leading-[28px] tracking-[-0.04em]">{item.title}</h3>
+              {/* Step title - 모바일: 16px bold center #444, 데스크: eyebrow 왼쪽 정렬 */}
+              <h3 className="w-full text-center text-base font-bold leading-[19px] tracking-[-0.02em] text-[#444444] md:mt-4 md:text-left md:text-eyebrow md:leading-[28px] md:tracking-[-0.04em] md:text-heading">
+                {item.title}
+              </h3>
 
-              {/* icon placeholder */}
-              <div className="mt-4.5 flex h-10 w-10 items-center justify-center rounded-lg text-primary">
+              {/* Icon - 40x40, border 2px primary */}
+              <div className="flex h-10 w-10 flex-none items-center justify-center rounded-lg text-primary md:mt-4.5">
                 {item.icon}
               </div>
 
-              <p className="mt-4.5 text-[18px] leading-relaxed text-muted-light tracking-[-0.04em] md:max-w-[200px]">
+              {/* Description - 모바일: 13px 500 center 24px line-height #888 */}
+              <p className="w-full text-center text-caption font-medium leading-6 tracking-[-0.02em] text-muted-light md:mt-4.5 md:text-left md:text-body md:leading-relaxed md:tracking-[-0.04em] md:max-w-[200px]">
                 {item.description}
               </p>
             </div>

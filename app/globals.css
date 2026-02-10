@@ -5,6 +5,7 @@
   --background: #ffffff;
   --foreground: #171717;
   --container-max: 1226px;
+  --text-caption: 13px;
 }
 
 @theme inline {
@@ -47,6 +48,17 @@
   --font-pretendard: "Pretendard", ui-sans-serif, system-ui, sans-serif;
   --font-montserrat: var(--font-montserrat), "Montserrat", ui-sans-serif,
     system-ui, sans-serif;
+
+  /* 타이포 – 글자 크기 (의미 있는 토큰) */
+  --text-hero-title: 36px;
+  --text-section-title: 40px;
+  --text-section-title-sm: 36px;
+  --text-subsection-title: 28px;
+  --text-card-title: 24px;
+  --text-eyebrow: 20px;
+  --text-body: 16px;
+  --text-small: 14px;
+  --text-caption: 13px;
 }
 
 body {
@@ -62,6 +74,13 @@ button:disabled {
   cursor: not-allowed;
 }
 
+/* 캡션 타이포 (13px) – 전역 토큰으로 사용 */
+@layer components {
+  .text-caption {
+    font-size: var(--text-caption);
+  }
+}
+
 /* 1226px 컨테이너 – 전체 공통 */
 @layer components {
   .container-main {
@@ -69,7 +88,14 @@ button:disabled {
     max-width: var(--container-max);
     margin-left: auto;
     margin-right: auto;
-
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  @media (min-width: 768px) {
+    .container-main {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
   }
   /* @media (min-width: 1024px) {
     .container-main {
