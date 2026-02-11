@@ -32,7 +32,7 @@ export default function HeroSection() {
           <br />
           아린워시(Alinwash)
         </h1>
-        <p className="hidden md:block mt-0 md:mt-4 text-small md:text-body text-on-dark">
+        <p className="hidden md:block mt-0 md:mt-4 text-small md:text-body text-on-dark tracking-[-0.04em] font-[var(--font-montserrat)]">
           3050 오너드라이버가 선택한 No.1 디테일링 출장 세차
         </p>
         </div>

@@ -67,7 +67,7 @@ export default function BookingForm() {
   };
 
   return (
-    <section className="relative z-10 -mt-64 md:-mt-20">
+    <section className="relative z-10 -mt-64 md:-mt-28">
       <div className="container-main">
         <div
           ref={sectionRef}
@@ -82,7 +82,7 @@ export default function BookingForm() {
               <form
                 onSubmit={handleSubmit}
                 noValidate
-                className="flex flex-col gap-4 md:flex-row md:items-start md:gap-3"
+                className="flex flex-col gap-4 md:flex-row md:items-start md:gap-5"
               >
                 {/* 이름 */}
                 <div className="flex-1">

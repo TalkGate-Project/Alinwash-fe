@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import "@fontsource/pretendard";
 
 :root {
   --background: #ffffff;
@@ -43,9 +42,9 @@
   --color-icon-muted: #B0B0B0;
 
   /* 1순위 Pretendard, 2순위 Montserrat 기본 스택 */
-  --font-sans: "Pretendard", var(--font-montserrat), ui-sans-serif, system-ui,
+  --font-sans: var(--font-pretendard-local), var(--font-montserrat), ui-sans-serif, system-ui,
     sans-serif;
-  --font-pretendard: "Pretendard", ui-sans-serif, system-ui, sans-serif;
+  --font-pretendard: var(--font-pretendard-local), ui-sans-serif, system-ui, sans-serif;
   --font-montserrat: var(--font-montserrat), "Montserrat", ui-sans-serif,
     system-ui, sans-serif;
 
@@ -64,6 +63,7 @@
 body {
   background: var(--background);
   color: var(--foreground);
+  font-synthesis: none;
 }
 
 /* button 기본 커서 */

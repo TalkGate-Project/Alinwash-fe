@@ -20,7 +20,7 @@ export default function ServiceHero() {
       <div className="absolute top-0 left-0 right-0 z-20">
         <Header variant="overlay" />
       </div>
-      <div className="container-main relative z-10 flex flex-1 items-center !px-7 md:!px-0 pb-6 pt-40 md:pb-8 md:pt-20 pointer-events-none">
+      <div className="container-main relative z-10 flex flex-1 items-center !px-7 pb-6 pt-40 md:pb-8 md:pt-20 pointer-events-none">
         <div className="pointer-events-auto flex flex-col gap-3 md:gap-4 hero-text-fade">
           <h1 className="text-[20px] font-bold leading-[-0.04em] text-on-dark-muted md:text-hero-title">
             서비스 소개
