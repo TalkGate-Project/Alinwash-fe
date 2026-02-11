@@ -1,21 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { format, parse } from "date-fns";
+import { useRouter } from "next/navigation";
+import { format, isValid, parse } from "date-fns";
 import DateTimePicker from "@/components/DateTimePicker";
 import { useInViewOnce } from "@/hooks/useInViewOnce";
-import SubmitStatusModal from "@/components/SubmitStatusModal";
 
 interface FormData {
   name: string;
   phone: string;
   date: string; // "yyyy-MM-dd'T'HH:mm" (예약일시)
-}
-
-interface FormErrors {
-  name?: string;
-  phone?: string;
-  date?: string;
 }
 
 /**
@@ -33,89 +27,44 @@ function formatPhoneInput(value: string): string {
 }
 
 export default function BookingForm() {
+  const router = useRouter();
   const { ref: sectionRef, inView } = useInViewOnce<HTMLDivElement>();
   const [form, setForm] = useState<FormData>({
     name: "",
     phone: "",
     date: "",
   });
-  const [errors, setErrors] = useState<FormErrors>({});
-  const [submitted, setSubmitted] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
-  const [submitModalType, setSubmitModalType] = useState<"success" | "error" | null>(null);
 
-  const validate = (): FormErrors => {
-    const newErrors: FormErrors = {};
-
-    if (!form.name.trim()) {
-      newErrors.name = "이름을 입력해 주세요.";
-    }
-
-    const phoneDigits = form.phone.replace(/\D/g, "");
-    if (!form.phone.trim()) {
-      newErrors.phone = "연락처를 입력해 주세요.";
-    } else if (phoneDigits.length < 10 || phoneDigits.length > 11) {
-      newErrors.phone = "연락처는 10~11자리 숫자로 입력해 주세요.";
-    }
-
-    if (!form.date) {
-      newErrors.date = "예약일시를 선택해 주세요.";
-    }
-
-    return newErrors;
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const validationErrors = validate();
-    setErrors(validationErrors);
+    const params = new URLSearchParams();
 
-    if (Object.keys(validationErrors).length === 0) {
-      setSubmitting(true);
-      try {
-        const dateForServer = form.date
-          ? format(parse(form.date, "yyyy-MM-dd'T'HH:mm", new Date()), "yyyy년 MM월 dd일 HH시")
-          : "";
-        const res = await fetch("/api/booking", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            name: form.name.trim(),
-            phone: form.phone.trim(),
-            date: dateForServer,
-          }),
-        });
-        if (!res.ok) {
-          setSubmitModalType("error");
-          return;
-        }
-        setSubmitted(true);
-        setForm({ name: "", phone: "", date: "" });
-        setErrors({});
-        setSubmitModalType("success");
-      } catch {
-        setSubmitModalType("error");
-      } finally {
-        setSubmitting(false);
+    const trimmedName = form.name.trim();
+    if (trimmedName) {
+      params.set("name", trimmedName);
+    }
+
+    const formattedPhone = formatPhoneInput(form.phone);
+    const phoneDigits = formattedPhone.replace(/\D/g, "");
+    if (phoneDigits.length >= 10 && phoneDigits.length <= 11) {
+      params.set("phone", formattedPhone);
+    }
+
+    if (form.date) {
+      const parsedDate = parse(form.date, "yyyy-MM-dd'T'HH:mm", new Date());
+      if (isValid(parsedDate)) {
+        params.set("time", format(parsedDate, "yyyy-MM-dd'T'HH:mm"));
       }
     }
+
+    const query = params.toString();
+    router.push(query ? `/online_inquiry?${query}#consult-form` : "/online_inquiry#consult-form");
   };
 
   const handleChange = (field: keyof FormData, value: string) => {
     const next = field === "phone" ? formatPhoneInput(value) : value;
     setForm((prev) => ({ ...prev, [field]: next }));
-    if (errors[field]) {
-      setErrors((prev) => ({ ...prev, [field]: undefined }));
-    }
   };
-
-  const isFormValid = Object.keys(validate()).length === 0;
-  const isButtonDisabled = submitting || (submitted && !isFormValid);
-  const buttonLabel = submitting
-    ? "제출 중..."
-    : submitted && !isFormValid
-      ? "전송완료"
-      : "견적 및 예약상담";
 
   return (
     <section className="relative z-10 -mt-64 md:-mt-20">
@@ -153,11 +102,6 @@ export default function BookingForm() {
                       className="w-full min-h-[48px] rounded-lg border border-zinc-200 px-3 pl-10 py-2.5 text-sm outline-none transition-colors focus:border-primary"
                     />
                   </div>
-                  {errors.name && (
-                    <div className="mt-1 text-xs text-red-500" role="alert" aria-live="polite">
-                      {errors.name}
-                    </div>
-                  )}
                 </div>
 
                 {/* 연락처 */}
@@ -180,11 +124,6 @@ export default function BookingForm() {
                       className="w-full min-h-[48px] rounded-lg border border-zinc-200 px-3 pl-10 py-2.5 text-sm outline-none transition-colors focus:border-primary"
                     />
                   </div>
-                  {errors.phone && (
-                    <div className="mt-1 text-xs text-red-500" role="alert" aria-live="polite">
-                      {errors.phone}
-                    </div>
-                  )}
                 </div>
 
                 {/* 예약일시 */}
@@ -231,31 +170,20 @@ export default function BookingForm() {
                       />
                     </div>
                   </div>
-                  {errors.date && (
-                    <div className="mt-1 text-xs text-red-500" role="alert" aria-live="polite">
-                      {errors.date}
-                    </div>
-                  )}
                 </div>
 
                 {/* 제출 버튼 */}
                 <div className="flex flex-col gap-2 flex-shrink-0 pt-0 md:pt-6.5">
                   <button
                     type="submit"
-                    disabled={isButtonDisabled}
-                    className="min-h-[48px] w-full rounded-[50px] bg-primary px-6 text-body font-semibold text-white transition-colors hover:bg-primary-hover disabled:opacity-60 disabled:cursor-not-allowed md:min-w-[288px] md:w-auto"
+                    className="min-h-[48px] w-full rounded-[50px] bg-primary px-6 text-body font-semibold text-white transition-colors hover:bg-primary-hover md:min-w-[288px] md:w-auto"
                   >
-                    {buttonLabel}
+                    견적 및 예약상담
                   </button>
                 </div>
               </form>
         </div>
       </div>
-      <SubmitStatusModal
-        open={submitModalType !== null}
-        type={submitModalType ?? "success"}
-        onClose={() => setSubmitModalType(null)}
-      />
     </section>
   );
 }

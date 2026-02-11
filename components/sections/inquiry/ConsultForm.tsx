@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { useInViewOnce } from "@/hooks/useInViewOnce";
-import { format, parse } from "date-fns";
+import { format, isValid, parse } from "date-fns";
 import DateTimePicker from "@/components/DateTimePicker";
 import SubmitStatusModal from "@/components/SubmitStatusModal";
 
@@ -13,6 +14,7 @@ interface FormData {
   carNumber: string;
   carModel: string;
   address: string;
+  placeDetail: string;
   content: string;
   agree: boolean;
 }
@@ -31,9 +33,15 @@ const initialForm: FormData = {
   carNumber: "",
   carModel: "",
   address: "",
+  placeDetail: "",
   content: "",
   agree: false,
 };
+
+interface DaumPostcodeResult {
+  roadAddress?: string;
+  jibunAddress?: string;
+}
 
 function formatPhoneInput(value: string): string {
   const digits = value.replace(/\D/g, "").slice(0, 11);
@@ -45,11 +53,122 @@ function formatPhoneInput(value: string): string {
 }
 
 export default function ConsultForm() {
+  const searchParams = useSearchParams();
+  const hasAppliedPrefillRef = useRef(false);
   const { ref: sectionRef, inView } = useInViewOnce<HTMLDivElement>();
   const [form, setForm] = useState<FormData>(initialForm);
   const [errors, setErrors] = useState<FormErrors>({});
   const [submitting, setSubmitting] = useState(false);
+  const [isAddressApiReady, setIsAddressApiReady] = useState(false);
+  const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
+  const [addressBase, setAddressBase] = useState("");
+  const [addressDetail, setAddressDetail] = useState("");
+  const [addressModalError, setAddressModalError] = useState("");
   const [submitModalType, setSubmitModalType] = useState<"success" | "error" | null>(null);
+
+  useEffect(() => {
+    if (hasAppliedPrefillRef.current) {
+      return;
+    }
+    hasAppliedPrefillRef.current = true;
+
+    const nextName = searchParams.get("name")?.trim() ?? "";
+    const nextPhone = formatPhoneInput(searchParams.get("phone") ?? "");
+    const nextPhoneDigits = nextPhone.replace(/\D/g, "");
+    const nextTime = searchParams.get("time")?.trim() ?? "";
+    const parsedTime = nextTime ? parse(nextTime, "yyyy-MM-dd'T'HH:mm", new Date()) : null;
+
+    setForm((prev) => ({
+      ...prev,
+      ...(nextName ? { name: nextName } : {}),
+      ...(nextPhoneDigits.length >= 10 && nextPhoneDigits.length <= 11
+        ? { phone: nextPhone }
+        : {}),
+      ...(parsedTime && isValid(parsedTime)
+        ? { time: format(parsedTime, "yyyy-MM-dd'T'HH:mm") }
+        : {}),
+    }));
+  }, [searchParams]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const windowWithDaum = window as typeof window & {
+      daum?: { Postcode?: new (options: { oncomplete: (data: DaumPostcodeResult) => void }) => { open: () => void } };
+    };
+
+    if (windowWithDaum.daum?.Postcode) {
+      setIsAddressApiReady(true);
+      return;
+    }
+
+    const script = document.createElement("script");
+    script.src = "https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js";
+    script.async = true;
+    script.onload = () => setIsAddressApiReady(true);
+    script.onerror = () => setIsAddressApiReady(false);
+    document.body.appendChild(script);
+
+    return () => {
+      script.onload = null;
+      script.onerror = null;
+    };
+  }, []);
+
+  const openAddressSearch = () => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const windowWithDaum = window as typeof window & {
+      daum?: { Postcode?: new (options: { oncomplete: (data: DaumPostcodeResult) => void }) => { open: () => void } };
+    };
+
+    const Postcode = windowWithDaum.daum?.Postcode;
+    if (!Postcode) {
+      return;
+    }
+
+    new Postcode({
+      oncomplete: (data) => {
+        const selectedAddress = (data.roadAddress || data.jibunAddress || "").trim();
+        if (!selectedAddress) {
+          return;
+        }
+        setAddressBase(selectedAddress);
+        setAddressModalError("");
+      },
+    }).open();
+  };
+
+  const openAddressModal = () => {
+    if (!addressBase && !addressDetail && form.address.trim()) {
+      setAddressBase(form.address.trim());
+    }
+    setAddressModalError("");
+    setIsAddressModalOpen(true);
+  };
+
+  const closeAddressModal = () => {
+    setIsAddressModalOpen(false);
+    setAddressModalError("");
+  };
+
+  const applyAddressFromModal = () => {
+    const trimmedBase = addressBase.trim();
+    const trimmedDetail = addressDetail.trim();
+    if (!trimmedBase) {
+      setAddressModalError("기본주소를 먼저 선택해 주세요.");
+      return;
+    }
+
+    const nextAddress = [trimmedBase, trimmedDetail].filter(Boolean).join(" ");
+    handleChange("address", nextAddress);
+    setAddressModalError("");
+    setIsAddressModalOpen(false);
+  };
 
   const validate = (): FormErrors => {
     const newErrors: FormErrors = {};
@@ -94,11 +213,12 @@ export default function ConsultForm() {
             carNumber: form.carNumber.trim(),
             carModel: form.carModel.trim(),
             address: form.address.trim(),
+            placeDetail: form.placeDetail.trim(),
             content: form.content.trim(),
             agree: form.agree,
           }),
         });
-        const data = (await res.json()) as { error?: string };
+        await res.json();
         if (!res.ok) {
           setSubmitModalType("error");
           return;
@@ -143,7 +263,7 @@ export default function ConsultForm() {
     "!min-h-0 !h-auto !rounded-none !border-0 !border-b !border-zinc-200 !bg-transparent !px-4 !py-3 !text-sm !outline-none !transition-colors placeholder:!text-zinc-400 focus:!border-primary";
 
   return (
-    <section className="border-t border-zinc-100 py-12 md:py-24">
+    <section id="consult-form" className="border-t border-zinc-100 py-12 md:py-24">
       <div className="!px-7 container-main">
         <div
           ref={sectionRef}
@@ -267,9 +387,27 @@ export default function ConsultForm() {
                 </label>
                 <input
                   type="text"
-                  placeholder="주소를 입력하세요"
+                  placeholder="주소를 선택하려면 클릭하세요"
                   value={form.address}
-                  onChange={(e) => handleChange("address", e.target.value)}
+                  onClick={openAddressModal}
+                  readOnly
+                  className={`${inputClass} cursor-pointer`}
+                />
+              </div>
+
+              {/* 장소 설명 */}
+              <div>
+                <label className="mb-1 block text-[16px] font-medium md:text-[18px]">
+                  장소 설명{" "}
+                  <span className="text-zinc-400">
+                    (ex. 아파트 지하주차장 B2 12번)
+                  </span>
+                </label>
+                <input
+                  type="text"
+                  placeholder="상세 위치를 입력하세요"
+                  value={form.placeDetail}
+                  onChange={(e) => handleChange("placeDetail", e.target.value)}
                   className={inputClass}
                 />
               </div>
@@ -325,6 +463,95 @@ export default function ConsultForm() {
             </form>
         </div>
       </div>
+      {isAddressModalOpen && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/45 px-4 backdrop-blur-[2px]"
+          onClick={closeAddressModal}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="address-modal-title"
+        >
+          <div
+            className="w-full max-w-[520px] rounded-[24px] bg-white p-6 shadow-[0px_4px_8px_rgba(16,24,64,0.08)] md:p-7"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3
+              id="address-modal-title"
+              className="text-[18px] font-bold leading-[152%] tracking-[-0.04em] text-heading md:text-[20px]"
+            >
+              주소 입력
+            </h3>
+            <p className="mt-1 text-sm leading-[160%] tracking-[-0.04em] text-muted">
+              기본주소를 검색한 뒤 상세주소를 입력해 주세요.
+            </p>
+
+            <div className="mt-6 space-y-4">
+              <div>
+                <label className="mb-1 block text-[15px] font-medium text-heading md:text-[16px]">
+                  기본주소
+                </label>
+                <div className="flex items-center gap-2">
+                  <input
+                    type="text"
+                    readOnly
+                    value={addressBase}
+                    placeholder="주소 검색 버튼을 눌러 기본주소를 선택하세요"
+                    onClick={openAddressSearch}
+                    className={`${inputClass} cursor-pointer`}
+                  />
+                  <button
+                    type="button"
+                    onClick={openAddressSearch}
+                    disabled={!isAddressApiReady}
+                    className="flex-shrink-0 rounded-md border border-zinc-300 px-3 py-2 text-sm font-medium text-heading transition-colors hover:bg-zinc-50 disabled:cursor-not-allowed disabled:opacity-60"
+                  >
+                    {isAddressApiReady ? "주소 검색" : "로딩 중..."}
+                  </button>
+                </div>
+              </div>
+
+              <div>
+                <label className="mb-1 block text-[15px] font-medium text-heading md:text-[16px]">
+                  상세주소
+                </label>
+                <input
+                  type="text"
+                  value={addressDetail}
+                  onChange={(e) => {
+                    setAddressDetail(e.target.value);
+                    if (addressModalError) {
+                      setAddressModalError("");
+                    }
+                  }}
+                  placeholder="동/호수, 층수, 건물명 등을 입력하세요"
+                  className={inputClass}
+                />
+              </div>
+            </div>
+
+            {addressModalError && (
+              <p className="mt-3 text-xs text-red-500">{addressModalError}</p>
+            )}
+
+            <div className="mt-6 flex items-center justify-end gap-2">
+              <button
+                type="button"
+                onClick={closeAddressModal}
+                className="rounded-[8px] border border-zinc-300 px-4 py-2 text-sm font-medium text-heading transition-colors hover:bg-zinc-50"
+              >
+                취소
+              </button>
+              <button
+                type="button"
+                onClick={applyAddressFromModal}
+                className="rounded-[8px] bg-primary px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-primary-hover"
+              >
+                주소 적용
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       <SubmitStatusModal
         open={submitModalType !== null}
         type={submitModalType ?? "success"}
