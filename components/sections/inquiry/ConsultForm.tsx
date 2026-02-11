@@ -364,8 +364,8 @@ export default function ConsultForm() {
               <div>
                 <label className="mb-1 block text-[16px] font-medium md:text-[18px]">
                   차종/색상{" "}
-                  <span className="text-zinc-400">
-                    (ex. 현대 제네시스 검정)
+                  <span className="text-[#959595]">
+                    (예 : 현대 제네시스 검정)
                   </span>
                 </label>
                 <input
@@ -381,8 +381,8 @@ export default function ConsultForm() {
               <div>
                 <label className="mb-1 block text-[16px] font-medium md:text-[18px]">
                   주소{" "}
-                  <span className="text-zinc-400">
-                    (ex. 아파트명 000동 000호)
+                  <span className="text-[#959595]">
+                    (예 : 아파트명 000동 000호)
                   </span>
                 </label>
                 <input
@@ -399,8 +399,8 @@ export default function ConsultForm() {
               <div>
                 <label className="mb-1 block text-[16px] font-medium md:text-[18px]">
                   장소 설명{" "}
-                  <span className="text-zinc-400">
-                    (ex. 아파트 지하주차장 B2 12번)
+                  <span className="text-[#959595]">
+                    (예 : 아파트 지하주차장 B2 12번)
                   </span>
                 </label>
                 <input

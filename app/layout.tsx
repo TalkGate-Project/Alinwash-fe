@@ -10,6 +10,7 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
   title: "아린워시(Alinwash) | 출장 세차 No.1",
   description: "3050 오너드라이버가 선택한 No.1 디테일링 출장 세차",
   openGraph: {
