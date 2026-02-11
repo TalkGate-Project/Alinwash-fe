@@ -60,12 +60,12 @@ export default function ServicesGrid() {
     <section ref={sectionRef} className="bg-surface py-9 md:py-16 md:pt-[90px] md:pb-[135px]">
       <div className="container-main text-center">
         <p className={`text-small font-semibold text-muted md:text-eyebrow md:leading-[28px] md:tracking-[-0.04em] md:text-heading reveal-fade ${inView ? "reveal-visible" : ""}`}>
-          What&apos;s Next?
+          Services
         </p>
         <h2 className={`mt-2 text-[20px] font-bold tracking-[-0.04em] text-heading md:mt-5 md:text-section-title reveal-fade reveal-delay-1 ${inView ? "reveal-visible" : ""}`}>
           차를 위한 가장 완벽한 선택
         </h2>
-        <p className={`px-7 mx-auto mt-4 text-small leading-relaxed text-muted md:mt-6 md:text-body md:leading-[2] !text-left reveal-fade reveal-delay-2 ${inView ? "reveal-visible" : ""}`}>
+        <p className={`px-7 mx-auto mt-4 text-small leading-relaxed text-muted md:mt-6 md:text-[18px] md:leading-[2] text-left md:text-center reveal-fade reveal-delay-2 ${inView ? "reveal-visible" : ""}`}>
           찾아가는 편리함부터 확실한 사후 관리까지,<br />
           번거로운 세차 과정은 줄이고, 전문가의 세심한 손길로 최상의 컨디션을 유지합니다.
         </p>
@@ -138,10 +138,10 @@ export default function ServicesGrid() {
                   className="object-contain"
                 />
               </div>
-              <h3 className="mt-4 text-subsection-title font-bold tracking-[-0.04em] text-heading">
+              <h3 className="mt-4.5 text-subsection-title font-bold tracking-[-0.04em] text-heading">
                 {service.title}
               </h3>
-              <p className="mt-2 text-small leading-relaxed text-muted tracking-[-0.04em]">
+              <p className="mt-2 text-small leading-relaxed text-muted tracking-[-0.04em] font-medium">
                 {service.description}
               </p>
             </div>

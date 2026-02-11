@@ -9,7 +9,7 @@ export default function WhyAlinwash() {
 
   return (
     <section ref={sectionRef} className="py-12 md:py-24">
-      <div className="!px-7 md:px-3 container-main grid grid-cols-1 items-center md:grid-cols-2 gap-6">
+      <div className="!px-7 md:px-0 container-main grid grid-cols-1 items-center md:grid-cols-[1fr_1.05fr] gap-6 md:gap-x-[122px]">
         {/* 모바일 1순위: 2줄 제목 (사진 위) / 웹: 우측 1행 */}
         <div className={`order-1 text-center md:col-start-2 md:row-start-1 md:text-left reveal-fade ${inView ? "reveal-visible" : ""}`}>
           <p className="text-small font-semibold text-muted md:text-eyebrow md:leading-[28px] md:text-heading">
@@ -34,14 +34,14 @@ export default function WhyAlinwash() {
         </div>
 
         {/* 모바일 3순위: 항목·CTA (사진 아래) / 웹: 우측 2행 */}
-        <div className={`order-3 md:col-start-2 md:row-start-2 text-left reveal-up reveal-delay-2 ${inView ? "reveal-visible" : ""}`}>
+        <div className={`order-3 md:col-start-2 md:row-start-2 md:min-w-[632px] text-left reveal-up reveal-delay-2 ${inView ? "reveal-visible" : ""}`}>
           {/* 항목 1 */}
           <div className="mt-2 md:mt-0">
             <h3 className="text-base font-bold text-primary md:text-lg">
               1. 당신의 시간을 아껴드리는 편리함
             </h3>
-            <p className="mt-2 text-small leading-relaxed tracking-[-0.04em] text-muted-alt md:text-body md:leading-[14px]">
-              세차장까지 이동하고 대기하는 번거로움이 없습니다.<br className="hidden md:block" /><br />
+            <p className="mt-1.5 text-small tracking-[-0.04em] text-muted-alt md:text-body md:leading-[2]">
+              세차장까지 이동하고 대기하는 번거로움이 없습니다.<br />
               집, 직장 어디든 주차 공간만 있다면 고객님이 계신 곳으로 직접 찾아갑니다.
             </p>
           </div>
@@ -51,8 +51,8 @@ export default function WhyAlinwash() {
             <h3 className="text-base font-bold text-primary md:text-lg">
               2. 꼼꼼한 디테일링 케어
             </h3>
-            <p className="mt-2 text-small leading-relaxed tracking-[-0.04em] text-muted-alt md:text-body md:leading-[14px]">
-              단순히 겉만 닦는 세차가 아니라, 전문가의 손길로 차량 내부의 작은 틈새까지 정밀하게 관리합니다.<br className="hidden md:block" /><br />
+            <p className="mt-1.5 text-small tracking-[-0.04em] text-muted-alt md:text-body md:leading-[2]">
+              단순히 겉만 닦는 세차가 아니라, 전문가의 손길로 차량 내부의 작은 틈새까지 정밀하게 관리합니다.<br />
               차량의 도장면을 보호하기 위해 검증된 약재와 전문 장비를 사용하여 안전하게 작업합니다.
             </p>
           </div>
