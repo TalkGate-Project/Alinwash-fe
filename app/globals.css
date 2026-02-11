@@ -79,6 +79,14 @@ button:disabled {
   .text-caption {
     font-size: var(--text-caption);
   }
+  
+  /* 
+    Tailwind font-bold(700)를 730으로 오버라이드 
+    (Pretendard Variable에서 700이 얇게 느껴지는 이슈 보정)
+  */
+  .font-bold {
+    font-weight: 730;
+  }
 }
 
 /* 1226px 컨테이너 – 전체 공통 */

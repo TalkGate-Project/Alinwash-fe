@@ -56,31 +56,31 @@ export default function FaqSection() {
             return (
               <div
                 key={index}
-                className={`rounded-xl bg-white reveal-up reveal-delay-${Math.min(index + 1, 4)} ${inView ? "reveal-visible" : ""} ${isOpen ? "shadow-[0px_4px_8px_0px_#0000001A]" : "shadow-[0px_1px_3px_0px_#0000000D]"}`}
+                className={`rounded-[12px] bg-white reveal-up reveal-delay-${Math.min(index + 1, 4)} ${inView ? "reveal-visible" : ""} ${isOpen ? "shadow-[0px_4px_8px_0px_#0000001A]" : "shadow-[0px_1px_3px_0px_#0000000D]"}`}
               >
                 <button
                   type="button"
-                  className="flex w-full items-start justify-between gap-3 px-5 py-4 text-left text-sm font-medium md:text-base"
+                  className={`flex w-full items-start justify-between gap-3 px-5 py-4 md:px-8 ${isOpen ? "md:pt-8 md:pb-4" : "md:py-8"} text-left text-sm font-medium md:text-base`}
                   onClick={() => toggle(index)}
                   aria-expanded={isOpen}
                 >
-                  <span className={`flex-1 ${isOpen ? "text-primary" : "text-heading"} font-semibold`}>
+                  <span className={`flex-1 ${isOpen ? "text-primary" : "text-heading"} md:text-[20px] font-semibold`}>
                     {item.question}
                   </span>
                   {isOpen ? (
-                    <svg className="h-5 w-5 shrink-0 text-zinc-400 rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden>
+                    <svg className="h-5 w-5 shrink-0 rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                     </svg>
                   ) : (
-                    <svg className="h-5 w-5 shrink-0 text-zinc-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden>
+                    <svg className="h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                     </svg>
                   )}
                 </button>
 
                 {isOpen && (
-                  <div className="md:border-t md:border-zinc-100 px-5 pb-5 md:pt-3">
-                    <p className="text-small leading-relaxed text-zinc-500 md:text-sm">
+                  <div className="px-5 pb-5 md:px-8">
+                    <p className="text-small leading-[2] text-zinc-500 md:text-[16px]">
                       A: {item.answer}
                     </p>
                   </div>
