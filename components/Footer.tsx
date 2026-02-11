@@ -85,7 +85,7 @@ export default function Footer() {
                 key={social.label}
                 href={social.href}
                 aria-label={social.label}
-                className="flex h-8 w-8 items-center justify-center text-zinc-500 transition-colors hover:text-zinc-300 [&_svg]:h-full [&_svg]:w-full"
+                className="flex h-8 w-8 items-center justify-center text-zinc-500 transition-colors hover:text-zinc-600 [&_svg]:h-full [&_svg]:w-full"
               >
                 {social.icon}
               </a>
@@ -115,7 +115,7 @@ export default function Footer() {
                 key={social.label}
                 href={social.href}
                 aria-label={social.label}
-                className="flex h-10 w-10 items-center justify-center text-zinc-500 transition-colors hover:text-zinc-300 [&_svg]:h-full [&_svg]:w-full"
+                className="flex h-10 w-10 items-center justify-center text-zinc-500 transition-colors hover:text-zinc-600 [&_svg]:h-full [&_svg]:w-full"
               >
                 {social.icon}
               </a>
