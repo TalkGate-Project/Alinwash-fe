@@ -56,9 +56,9 @@ export default function HowToUseSection() {
   const { ref: sectionRef, inView } = useInViewOnce<HTMLElement>();
 
   return (
-    <section ref={sectionRef} className="bg-[#F1F4FF] py-12 md:bg-transparent md:py-24">
+    <section ref={sectionRef} className="bg-[#F1F4FF] py-12 md:pb-[134px] md:pt-[62px]">
       <div className="container-main">
-        <h2 className={`text-center text-[18px] font-bold leading-[48px] tracking-[-0.04em] text-black md:text-left md:leading-normal md:text-3xl reveal-fade ${inView ? "reveal-visible" : ""}`}>
+        <h2 className={`text-center text-[18px] font-bold leading-[48px] tracking-[-0.04em] text-black md:text-left md:leading-normal md:text-section-title-sm reveal-fade ${inView ? "reveal-visible" : ""}`}>
           이용방법
         </h2>
 

@@ -382,7 +382,7 @@ export default function ConsultForm() {
                 <label className="mb-1 block text-[16px] font-medium md:text-[18px]">
                   주소{" "}
                   <span className="text-[#959595]">
-                    (예 : 아파트명 000동 000호)
+                    (예 : 아파트명 OOO동 OOO호)
                   </span>
                 </label>
                 <input

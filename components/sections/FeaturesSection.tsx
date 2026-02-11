@@ -49,7 +49,7 @@ export default function FeaturesSection() {
   return (
     <section ref={sectionRef} className="py-12 md:pt-[132px] md:pb-[166px]">
       <div className="container-main">
-        <h2 className={`text-center text-[18px] font-semibold md:text-section-title-sm reveal-fade ${inView ? "reveal-visible" : ""}`}>
+        <h2 className={`text-center text-[18px] font-semibold md:text-section-title-sm tracking-[-0.04em] reveal-fade ${inView ? "reveal-visible" : ""}`}>
           당신의 일상을 바꾸는 스마트한 차량 관리
         </h2>
 
@@ -63,10 +63,10 @@ export default function FeaturesSection() {
               <div className="flex h-[58px] w-[58px] items-center justify-center rounded-[10px] bg-background text-primary text-sm font-bold shadow-[0px_0px_16px_0px_#0000001A]">
                 {feature.icon}
               </div>
-              <h3 className="mt-5 md:mt-6 text-[18px] font-bold md:text-card-title">
+              <h3 className="mt-5 md:mt-6 text-[18px] font-bold md:text-card-title tracking-[-0.04em]">
                 {feature.title}
               </h3>
-              <p className="mt-5 md:mt-6 text-caption leading-relaxed md:text-body">
+              <p className="mt-5 md:mt-6 text-caption leading-relaxed md:text-body tracking-[-0.04em]">
                 {feature.description}
               </p>
             </div>

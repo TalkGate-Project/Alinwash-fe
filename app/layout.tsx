@@ -1,7 +1,15 @@
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import Footer from "@/components/Footer";
+
+const pretendard = localFont({
+  src: "./fonts/PretendardVariable.woff2",
+  display: "swap",
+  weight: "45 920",
+  variable: "--font-pretendard-local",
+});
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -16,13 +24,13 @@ export const metadata: Metadata = {
   openGraph: {
     images: [
       {
-        url: "/logo-larger.png",
+        url: "/logo-mobile.svg",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    images: ["/logo-larger.png"],
+    images: ["/logo-mobile.svg"],
   },
 };
 
@@ -33,7 +41,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className={`${montserrat.variable} font-sans antialiased`}>
+      <body className={`${pretendard.variable} ${montserrat.variable} font-sans antialiased`}>
         <div className="min-h-screen overflow-hidden">
           {children}
           <Footer />
