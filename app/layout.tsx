@@ -24,13 +24,13 @@ export const metadata: Metadata = {
   openGraph: {
     images: [
       {
-        url: "/logo-og.png",
+        url: "/alinwash-thumbnail.jpg",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    images: ["/logo-og.png"],
+    images: ["/alinwash-thumbnail.jpg"],
   },
 };
 
