@@ -24,13 +24,13 @@ export const metadata: Metadata = {
   openGraph: {
     images: [
       {
-        url: "/logo-mobile.svg",
+        url: "/logo-og.png",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    images: ["/logo-mobile.svg"],
+    images: ["/logo-og.png"],
   },
 };
 
