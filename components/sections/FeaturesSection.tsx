@@ -57,16 +57,16 @@ export default function FeaturesSection() {
           {FEATURES.map((feature, index) => (
             <div
               key={feature.id}
-              className={`md:min-h-[302px] rounded-[20px] bg-surface-card px-8 py-6 text-left transition-shadow hover:shadow-md md:p-[32px] reveal-up reveal-delay-${index + 1} ${inView ? "reveal-visible" : ""}`}
+              className={`md:min-h-[284px] rounded-[20px] bg-surface-card px-8 py-6 text-left transition-shadow hover:shadow-md md:p-[32px] reveal-up reveal-delay-${index + 1} ${inView ? "reveal-visible" : ""}`}
             >
               {/* icon placeholder */}
               <div className="flex h-[58px] w-[58px] items-center justify-center rounded-[10px] bg-background text-primary text-sm font-bold shadow-[0px_0px_16px_0px_#0000001A]">
                 {feature.icon}
               </div>
-              <h3 className="mt-5 md:mt-8 text-[18px] font-bold md:text-card-title">
+              <h3 className="mt-5 md:mt-6 text-[18px] font-bold md:text-card-title">
                 {feature.title}
               </h3>
-              <p className="mt-5 md:mt-8 text-caption leading-relaxed text-zinc-500 md:text-body">
+              <p className="mt-5 md:mt-6 text-caption leading-relaxed md:text-body">
                 {feature.description}
               </p>
             </div>

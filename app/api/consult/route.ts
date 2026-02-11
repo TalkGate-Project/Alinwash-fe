@@ -11,6 +11,7 @@ interface ConsultPayload {
   carNumber?: string;
   carModel?: string;
   address?: string;
+  placeDetail?: string;
   content?: string;
   agree?: boolean;
 }
@@ -57,6 +58,7 @@ export async function POST(request: NextRequest) {
       `🚗 차량번호: ${escapeHtml(body.carNumber?.trim() || "-")}`,
       `🚘 차종/색상: ${escapeHtml(body.carModel?.trim() || "-")}`,
       `📍 주소: ${escapeHtml(body.address?.trim() || "-")}`,
+      `📌 장소 설명: ${escapeHtml(body.placeDetail?.trim() || "-")}`,
       `📝 상담내용: ${escapeHtml(body.content?.trim() || "-")}`,
     ].join("\n");
 
